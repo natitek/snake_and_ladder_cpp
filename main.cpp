@@ -1,4 +1,4 @@
-//This a smaple code to test commit
+
 #include <iostream>
 
 using namespace std; 
