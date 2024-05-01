@@ -8,7 +8,7 @@
 #include <fstream>
 
 
-
+#define MAX_NAME_CHAR 10
 
 
 struct player
@@ -20,9 +20,6 @@ struct player
     int position;
 };
 
-void turn(player player, int roll){
-    player.position += roll;
-}
 struct player player1;
 struct player player2;
 struct player player3;
@@ -55,6 +52,13 @@ bool player4turnb = false;
 
 int offscreen = 0;
 
+char player1_name[MAX_NAME_CHAR + 1] = "\0";
+// char player2_name[MAX_NAME_CHAR + 1] = "\0";
+// char player3_name[MAX_NAME_CHAR + 1] = "\0";
+// char player4_name[MAX_NAME_CHAR + 1] = "\0";
+
+int letterCounter = 0;
+ 
 
 std::vector <Vector2> coordinates;
 
@@ -205,7 +209,7 @@ Texture2D multi_player = LoadTexture("src/img/multi_player.png");
 Sound backgroundsound = LoadSound("src/audio/royalty_free_bg_sound.mp3");
 Sound dice = LoadSound("src/audio/dice.mp3");
 
-    SetTargetFPS(20); // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 
 
 
@@ -215,7 +219,6 @@ Sound dice = LoadSound("src/audio/dice.mp3");
       generatecoordinates();
 
 
-    Rectangle btnBound;
 
 std::vector<int> snakehead = {32, 36, 48, 62, 88, 95, 97};
 std::vector<int> snaketail = {10, 6, 26, 18, 24, 56, 78};
@@ -223,6 +226,10 @@ std::vector<int> laddertop = {14, 30, 38, 42, 67, 76, 92, 99};
 std::vector<int> ladderbottom = {4, 8, 1, 21, 50, 28, 71, 80};
 
 Color trans = {0,0,0,0};
+
+Rectangle player1_name_box = {400,500,225,50};
+bool mouseOnText = false;
+int framesCounter = 0;
 
 //     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -300,8 +307,36 @@ for (int i = 0; i <= 6; i++){
 //             }
 //         }
 
-//Mute button test
+
+
+//Text logic
    
+   if (CheckCollisionPointRec(GetMousePosition(),player1_name_box)) mouseOnText = true;
+   else mouseOnText = false;
+
+   if(mouseOnText){
+    SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+    int key = GetCharPressed();
+
+    while(key > 0){
+        if((key >= 32) && (key <= 125) && (letterCounter < MAX_NAME_CHAR)){
+            player1_name[letterCounter] = (char)key;
+            player1_name[letterCounter+1] = '\0';
+            letterCounter++;
+        }
+        key = GetCharPressed();
+    }
+    if(IsKeyPressed(KEY_BACKSPACE)){
+        letterCounter--;
+        if(letterCounter <0) letterCounter = 0;
+        player1_name[letterCounter] = '\0';
+    }
+   }
+   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
+   if(mouseOnText) framesCounter++;
+   else framesCounter = 0;
 
 
 //         // Draw
@@ -372,6 +407,24 @@ for (int i = 0; i <= 6; i++){
          //--- MENU UI ---//
        
        DrawTexture(bg_squares,0,0,RAYWHITE); //background
+
+    
+
+    DrawRectangleRec(player1_name_box,WHITE); //text box
+    if(mouseOnText) DrawRectangleLines((int)player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height,DARKGREEN);
+
+    DrawText(player1_name, (int)player1_name_box.x+5, (int)player1_name_box.y+8, 40, MAROON);
+
+    DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
+
+    if(mouseOnText){
+        if(letterCounter < MAX_NAME_CHAR)
+        {
+
+            if(((framesCounter/20)%2) == 0) DrawText("_",(int)player1_name_box.x + 8 + MeasureText(player1_name, 40), (int)player1_name_box.y + 12, 40, BLACK);
+        }
+        else DrawText("press back space",230, 300 , 40, PINK);
+    }
 
     //     DrawTextureEx(dice_menu,{1000,300},0,0.5f,RAYWHITE);
        
