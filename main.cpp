@@ -406,7 +406,7 @@ for (int i = 0; i <= 6; i++){
 
          //--- MENU UI ---//
        
-       DrawTexture(bg_squares,0,0,RAYWHITE); //background
+       DrawTexture(bg_squares,0+offscreen,0,RAYWHITE); //background
 
     
 
@@ -433,12 +433,12 @@ for (int i = 0; i <= 6; i++){
     //     DrawTextureEx(piece_menu,{100,70},0,0.5f,RAYWHITE);
 
         Rectangle single_player_src = {0,0,single_player.width,single_player.height};
-        Rectangle single_player_des = {400,300,single_player_src.width,single_player_src.height};
+        Rectangle single_player_des = {400,300,single_player_src.width+offscreen,single_player_src.height};
 
        DrawTexturePro(single_player,single_player_src,single_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
 
        Rectangle multi_player_src = {0,0,multi_player.width,multi_player.height};
-        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50,300,multi_player_src.width,multi_player_src.height};
+        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50+offscreen,300,multi_player_src.width,multi_player_src.height};
 
        DrawTexturePro(multi_player,multi_player_src,multi_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
 
@@ -461,7 +461,7 @@ if (CheckCollisionPointRec(mouseposition, play_button_des)){
         DrawTextureEx(setting_button,{20+(float)offscreen,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
 
         
-// std::cout << GetTime() << std::endl;
+        // std::cout << GetTime() << std::endl;
         EndDrawing();
         DrawText(TextFormat("%i", player4.position), 100, 520, 80, LIGHTGRAY);
     }
