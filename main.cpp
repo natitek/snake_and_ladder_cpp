@@ -193,6 +193,12 @@ Texture2D dice_menu = LoadTexture("src/img/dice_menu.png");
 Texture2D dice_menu2 = LoadTexture("src/img/dice_menu2.png");
 Texture2D piece_menu = LoadTexture("src/img/piece_menu.png");
 
+Texture2D single_player = LoadTexture("src/img/single_player.png");
+
+Texture2D multi_player = LoadTexture("src/img/multi_player.png");
+
+
+
 
 //     // Sounds
 
@@ -373,14 +379,24 @@ for (int i = 0; i <= 6; i++){
 
     //     DrawTextureEx(piece_menu,{100,70},0,0.5f,RAYWHITE);
 
+        Rectangle single_player_src = {0,0,single_player.width,single_player.height};
+        Rectangle single_player_des = {400,300,single_player_src.width,single_player_src.height};
+
+       DrawTexturePro(single_player,single_player_src,single_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
+
+       Rectangle multi_player_src = {0,0,multi_player.width,multi_player.height};
+        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50,300,multi_player_src.width,multi_player_src.height};
+
+       DrawTexturePro(multi_player,multi_player_src,multi_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
+
 
        DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80+offscreen},0,0.2f,RAYWHITE);  //snl title
 
-       
+
         Rectangle play_button_src = {0,0,play_button.width,play_button.height};
         Rectangle play_button_des = {screenWidth/2+offscreen,screenHeight/2+offscreen,100,100};
 
-       DrawTexturePro(play_button,play_button_src,play_button_des,{play_button_des.width/2,play_button_des.height/2},0,RAYWHITE);
+       DrawTexturePro(play_button,play_button_src,play_button_des,{0,0},0,RAYWHITE);
 
 if (CheckCollisionPointRec(mouseposition, play_button_des)){
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
