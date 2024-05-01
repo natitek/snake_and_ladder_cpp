@@ -181,7 +181,10 @@ int main(void)
 
 Texture2D snakeimage = LoadTexture("src/img/snl.png");
 Texture2D blue_sprite = LoadTexture("src/sprite/blue.png");
-Texture2D bg_checkered = LoadTexture("src/img/");
+Texture2D bg_squares = LoadTexture("src/img/bg_check.png");
+Texture2D menu_title = LoadTexture("src/img/snl_title.png");
+Texture2D play_button = LoadTexture("src/img/play.png");
+Texture2D setting_button = LoadTexture("src/img/gear.png");
 
 
 //     // Sounds
@@ -351,7 +354,16 @@ for (int i = 0; i <= 6; i++){
         DrawText(TextFormat("%i", player3.position), 100, 420, 80, LIGHTGRAY);
 
          DrawText("players4 Positon : ", 100,480, 20, LIGHTGRAY);
+
+
+         // MENU UI
        
+       DrawTexture(bg_squares,0,0,RAYWHITE); //background
+      
+       DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80},0,0.2f,RAYWHITE);  //snl title
+       DrawTextureEx(play_button,(Vector2){(screenWidth/2)-(0.2*(play_button.width)/2),(screenHeight/2)-(0.2*play_button.height/2)},0,0.2f,RAYWHITE); //play button
+        DrawTextureEx(setting_button,{20,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
+
         
 // std::cout << GetTime() << std::endl;
         EndDrawing();
