@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "raygui.h"
 #include "iostream"
 #include "vector"
 #include <math.h>
@@ -52,6 +53,8 @@ bool player2turnb = false;
 bool player3turnb = false;
 bool player4turnb = false;
 
+int offscreen = 0;
+
 
 std::vector <Vector2> coordinates;
 
@@ -64,11 +67,12 @@ void inbetween(int initialsent , int destination){
     }
 }
 
-void checkwin(player theplayer){
-    if(theplayer.position == 100){
+
+// void checkwin(player theplayer){
+//     if(theplayer.position == 100){
         
-    }
-}
+//     }
+// }
 
     void generatecoordinates()
 {
@@ -185,6 +189,9 @@ Texture2D bg_squares = LoadTexture("src/img/bg_check.png");
 Texture2D menu_title = LoadTexture("src/img/snl_title.png");
 Texture2D play_button = LoadTexture("src/img/play.png");
 Texture2D setting_button = LoadTexture("src/img/gear.png");
+Texture2D dice_menu = LoadTexture("src/img/dice_menu.png");
+Texture2D dice_menu2 = LoadTexture("src/img/dice_menu2.png");
+Texture2D piece_menu = LoadTexture("src/img/piece_menu.png");
 
 
 //     // Sounds
@@ -218,11 +225,11 @@ Color trans = {0,0,0,0};
        
 
         // Get the coordinates of the mouse by pressing SPACE
-        Vector2 mousepositon = GetMousePosition();
+        Vector2 mouseposition = GetMousePosition();
         if (IsKeyReleased(KEY_SPACE))
         {
             
-            std::cout << "x:" << mousepositon.x << "   y: " << mousepositon.y << std::endl;
+            std::cout << "x:" << mouseposition.x << "   y: " << mouseposition.y << std::endl;
         }
 
         // if(player1);
@@ -356,13 +363,33 @@ for (int i = 0; i <= 6; i++){
          DrawText("players4 Positon : ", 100,480, 20, LIGHTGRAY);
 
 
-         // MENU UI
+         //--- MENU UI ---//
        
        DrawTexture(bg_squares,0,0,RAYWHITE); //background
-      
-       DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80},0,0.2f,RAYWHITE);  //snl title
-       DrawTextureEx(play_button,(Vector2){(screenWidth/2)-(0.2*(play_button.width)/2),(screenHeight/2)-(0.2*play_button.height/2)},0,0.2f,RAYWHITE); //play button
-        DrawTextureEx(setting_button,{20,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
+
+    //     DrawTextureEx(dice_menu,{1000,300},0,0.5f,RAYWHITE);
+       
+    //     // DrawTextureEx(dice_menu2,{700,400},0,0.5f,RAYWHITE);
+
+    //     DrawTextureEx(piece_menu,{100,70},0,0.5f,RAYWHITE);
+
+
+       DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80+offscreen},0,0.2f,RAYWHITE);  //snl title
+
+       
+        Rectangle play_button_src = {0,0,play_button.width,play_button.height};
+        Rectangle play_button_des = {screenWidth/2+offscreen,screenHeight/2+offscreen,100,100};
+
+       DrawTexturePro(play_button,play_button_src,play_button_des,{play_button_des.width/2,play_button_des.height/2},0,RAYWHITE);
+
+if (CheckCollisionPointRec(mouseposition, play_button_des)){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        offscreen = 2000;
+        PlaySound(dice);
+
+    }
+}
+        DrawTextureEx(setting_button,{20+(float)offscreen,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
 
         
 // std::cout << GetTime() << std::endl;
