@@ -396,7 +396,7 @@ for (int i = 0; i <= 6; i++){
         DrawTexturePro(setting_button,setting_button_src,setting_button_des,{0,0},0,RAYWHITE); //setting_button
                
                 // checks if play_button is clicked
-        if (CheckCollisionPointRec(mouseposition, play_button_des)){
+        if (CheckCollisionPointRec(mouseposition, play_button_des) && menu_state2 != true){
            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state3 = true;}
               // checks if setting_button is clicked
         if (CheckCollisionPointRec(mouseposition,setting_button_des)){
