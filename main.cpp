@@ -193,15 +193,12 @@ int main(void)
 
 //     // Textures
 
-Texture2D snakeimage = LoadTexture("src/img/snl.png");
-Texture2D blue_sprite = LoadTexture("src/sprite/blue.png");
-Texture2D bg_squares = LoadTexture("src/img/bg_check.png");
-Texture2D menu_title = LoadTexture("src/img/snl_title.png");
-Texture2D play_button = LoadTexture("src/img/play.png");
-Texture2D setting_button = LoadTexture("src/img/gear.png");
-Texture2D dice_menu = LoadTexture("src/img/dice_menu.png");
-Texture2D dice_menu2 = LoadTexture("src/img/dice_menu2.png");
-Texture2D piece_menu = LoadTexture("src/img/piece_menu.png");
+Texture2D snakeimage = LoadTexture("src/img/snl.png");  // board image
+Texture2D blue_sprite = LoadTexture("src/sprite/blue.png"); // player piece 
+Texture2D bg_squares = LoadTexture("src/img/bg_check.png"); // cyan backgroun
+Texture2D menu_title = LoadTexture("src/img/snl_title.png"); // title of game
+Texture2D play_button = LoadTexture("src/img/play.png"); // play button
+Texture2D setting_button = LoadTexture("src/img/gear.png"); //settings button
 
 Texture2D single_player = LoadTexture("src/img/single_player.png");
 
@@ -211,6 +208,7 @@ Texture2D option_bg = LoadTexture("src/img/option_bg.png");
 
 Texture2D submit_button = LoadTexture("src/img/submit.png");
 
+Texture2D main_menu_bg = LoadTexture("src/img/main_menu_bg.png");
 
 
 
@@ -219,7 +217,7 @@ Texture2D submit_button = LoadTexture("src/img/submit.png");
 Sound backgroundsound = LoadSound("src/audio/royalty_free_bg_sound.mp3");
 Sound dice = LoadSound("src/audio/dice.mp3");
 
-    SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+    SetTargetFPS(30); // Set our game to run at 60 frames-per-second
 
 
 
@@ -316,91 +314,6 @@ for (int i = 0; i <= 6; i++){
 
 
 //Text logic
-   
-   if (CheckCollisionPointRec(GetMousePosition(),player1_name_box)) mouseOnText1 = true;
-   else mouseOnText1 = false;
-
-   if(mouseOnText1){
-    SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-    int key = GetCharPressed();
-
-    while(key > 0){
-        if((key >= 32) && (key <= 125) && (letterCounter < MAX_NAME_CHAR)){
-            player1_name[letterCounter] = (char)key;
-            player1_name[letterCounter+1] = '\0';
-            letterCounter++;
-        }
-        key = GetCharPressed();
-    }
-    if(IsKeyPressed(KEY_BACKSPACE)){
-        letterCounter--;
-        if(letterCounter <0) letterCounter = 0;
-        player1_name[letterCounter] = '\0';
-    }
-   }
-   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-   if(mouseOnText1) framesCounter++;
-   else framesCounter = 0;
-
-
-   if (CheckCollisionPointRec(GetMousePosition(),player2_name_box)) mouseOnText2 = true;
-   else mouseOnText2 = false;
-
-   if(mouseOnText2){
-    SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-    int key2 = GetCharPressed();
-
-    while(key2 > 0){
-        if((key2 >= 32) && (key2 <= 125) && (letterCounter < MAX_NAME_CHAR)){
-            player2_name[letterCounter] = (char)key2;
-            player2_name[letterCounter+1] = '\0';
-            letterCounter++;
-        }
-        key2 = GetCharPressed();
-    }
-    if(IsKeyPressed(KEY_BACKSPACE)){
-        letterCounter--;
-        if(letterCounter <0) letterCounter = 0;
-        player2_name[letterCounter] = '\0';
-    }
-   }
-   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-   if(mouseOnText2) framesCounter++;
-   else framesCounter = 0;
-
-
-
-   if (CheckCollisionPointRec(GetMousePosition(),player3_name_box)) mouseOnText3 = true;
-   else mouseOnText3 = false;
-
-   if(mouseOnText3){
-    SetMouseCursor(MOUSE_CURSOR_IBEAM);
-
-    int key3 = GetCharPressed();
-
-    while(key3 > 0){
-        if((key3 >= 32) && (key3 <= 125) && (letterCounter < MAX_NAME_CHAR)){
-            player3_name[letterCounter] = (char)key3;
-            player3_name[letterCounter+1] = '\0';
-            letterCounter++;
-        }
-        key3 = GetCharPressed();
-    }
-    if(IsKeyPressed(KEY_BACKSPACE)){
-        letterCounter--;
-        if(letterCounter <0) letterCounter = 0;
-        player3_name[letterCounter] = '\0';
-    }
-   }
-   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-
-   if(mouseOnText3) framesCounter++;
-   else framesCounter = 0;
-
 
 
 //         // Draw
@@ -411,10 +324,6 @@ for (int i = 0; i <= 6; i++){
 
         Rectangle source = (Rectangle){0, 0, snakeimage.width, snakeimage.height};
         Rectangle Dest = (Rectangle){screenWidth / 2, screenHeight / 2, source.width * 1.5, source.height * 1.5};
-        DrawTexturePro(snakeimage, source, Dest, (Vector2){Dest.width / 2, (Dest.height / 2)}, 0, WHITE);
-
-
-
 
         Rectangle bluesource = (Rectangle){0, 0, blue_sprite.width, blue_sprite.height};
         Rectangle bluedestination = (Rectangle){coordinates[player1.position].x, coordinates[player1.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
@@ -429,17 +338,17 @@ for (int i = 0; i <= 6; i++){
         Rectangle orangedestination = (Rectangle){coordinates[player4.position].x+10, coordinates[player4.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
         //player 1
-         DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+        //  DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
 
-          //player 2
-         DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
+        //   //player 2
+        //  DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
 
       
-          //player 3
-         DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
+        //   //player 3
+        //  DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
       
-          //player 4
-         DrawTexturePro(blue_sprite, orangesource, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, ORANGE);
+        //   //player 4
+        //  DrawTexturePro(blue_sprite, orangesource, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, ORANGE);
 
 
 
@@ -448,6 +357,156 @@ for (int i = 0; i <= 6; i++){
         if(player1.position >= 100){
             DrawText("Player 1 Won", screenWidth/2, screenHeight/2, 80, GREEN);
         }
+
+
+         //--- MENU UI ---//
+    
+        
+
+        Rectangle option_bg_src = {0,0,option_bg.width,option_bg.height};
+        Rectangle option_bg_des = {0,0,option_bg.width,option_bg.height};
+
+        
+
+        Rectangle single_player_src = {0,0,single_player.width,single_player.height};
+        Rectangle single_player_des = {150,150,single_player_src.width,single_player_src.height};
+
+   
+
+        Rectangle multi_player_src = {0,0,multi_player.width,multi_player.height};
+        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50,single_player_des.y,multi_player_src.width,multi_player_src.height};
+
+        Rectangle play_button_src = {0,0,play_button.width,play_button.height};
+        Rectangle play_button_des = {screenWidth/2-40,screenHeight/2+60,100,100};
+
+        Rectangle setting_button_src = {0,0,setting_button.width,setting_button.height};
+        Rectangle setting_button_des = {50,600,100,100};
+
+        Rectangle submit_button_src = {0,0,submit_button.width,submit_button.height};
+        Rectangle submit_button_des = {screenWidth/2,screenHeight/2,submit_button.width*0.5,submit_button.height*0.5};
+
+     
+
+
+        //menu state 1  main menu
+        if(menu_state1){
+    menu_state2,menu_state3,menu_state4,menu_state5,menu_state6,menu_state7= false;
+        DrawTexture(main_menu_bg,0,0,RAYWHITE); //background
+        DrawTexturePro(play_button,play_button_src,play_button_des,{0,0},0,RAYWHITE); //playbutton
+        DrawTexturePro(setting_button,setting_button_src,setting_button_des,{0,0},0,RAYWHITE); //setting_button
+               
+                // checks if play_button is clicked
+        if (CheckCollisionPointRec(mouseposition, play_button_des)){
+           if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state3 = true;}
+              // checks if setting_button is clicked
+        if (CheckCollisionPointRec(mouseposition,setting_button_des)){
+            if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state2 = true;
+                    }
+                }
+              
+    
+ 
+         //menu state 2 settings menu
+      if(menu_state2){
+            menu_state1,menu_state3,menu_state4,menu_state5,menu_state6,menu_state7= false;
+        DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+        DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+          // press backspace to return to the main menu
+        if(IsKeyPressed(KEY_BACKSPACE) && menu_state2 == true){
+             menu_state1 =true;
+            menu_state2 = false;
+           
+        }
+    }
+
+         //menu state 3 choose b/n single player or multiplayer
+        if(menu_state3){
+    menu_state1 = false;
+    menu_state2 = false;
+    menu_state4 = false;
+    menu_state5 = false;
+    menu_state6 = false;
+    menu_state7 = false;
+    DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+    DrawTexturePro(single_player,single_player_src,single_player_des,{0,0},0,RAYWHITE);
+
+    DrawTexturePro(multi_player,multi_player_src,multi_player_des,{0,0},0,RAYWHITE);
+
+
+           if (CheckCollisionPointRec(mouseposition, single_player_des) && menu_state1 != true && menu_state2 != true && menu_state5 != true){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state4 = true;}
+
+    if (CheckCollisionPointRec(mouseposition, multi_player_des) && menu_state1 != true && menu_state2 != true  && menu_state4 != true){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state5 = true;}
+
+ if(IsKeyPressed(KEY_BACKSPACE) && menu_state3 == true){
+             menu_state1 =true;
+            menu_state3 = false;
+           
+        }
+    }
+
+         //menu state 4  single player options
+        if(menu_state4){
+    menu_state1 = false;
+    menu_state2 = false;
+    menu_state3 = false;
+    menu_state5 = false;
+    menu_state6 = false;
+    menu_state7 = false;
+   DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+   DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+    DrawText("Single player options", 400,100, 50, LIGHTGRAY);
+//    DrawRectangleRec(player1_name_box,WHITE);
+    DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
+
+    if (CheckCollisionPointRec(mouseposition, submit_button_des) && menu_state4 == true){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    }
+}
+
+
+ if(IsKeyPressed(KEY_BACKSPACE) && menu_state4 == true){
+             menu_state3 =true;
+            menu_state4 = false;
+           
+        }
+    }
+
+         //menu state 5 multiplayer option
+        if(menu_state5){
+    
+    menu_state1 = false;
+    menu_state2 = false;
+    menu_state3 = false;
+    menu_state4 = false;
+    menu_state6 = false;
+    menu_state7 = false;
+    DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+    DrawText("multiplayer options", 400,100, 50, LIGHTGRAY);
+    DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
+    if (CheckCollisionPointRec(mouseposition, submit_button_des)){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    }
+}
+ if(IsKeyPressed(KEY_BACKSPACE) && menu_state5 == true){
+             menu_state3 =true;
+            menu_state5 = false;
+           
+        }
+    }
+
+           //menu state 6 game screen
+        if(menu_state6){
+     menu_state1 = false;
+    menu_state2 = false;
+    menu_state3 = false;
+    menu_state4 = false;
+    menu_state5 = false;
+    menu_state7 = false;
+   
+
+  DrawTexturePro(snakeimage, source, Dest, (Vector2){Dest.width / 2, (Dest.height / 2)}, 0, WHITE);
 
         DrawText("press R to roll", 100, 110, 20, GREEN);
 
@@ -467,172 +526,16 @@ for (int i = 0; i <= 6; i++){
 
          DrawText("players4 Positon : ", 100,480, 20, LIGHTGRAY);
 
-
-         //--- MENU UI ---//
-       
-       DrawTexture(bg_squares,0,0,RAYWHITE); //background
-
-    
-
-    DrawRectangleRec(player1_name_box,WHITE); //text box
-    if(mouseOnText1) DrawRectangleLines((int)player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height,DARKGREEN);
-
-    DrawText(player1_name, (int)player1_name_box.x+5, (int)player1_name_box.y+8, 40, MAROON);
-
-    DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
-
-    if(mouseOnText1){
-        if(letterCounter < MAX_NAME_CHAR)
-        {
-
-            if(((framesCounter/20)%2) == 0) DrawText("_",(int)player1_name_box.x + 8 + MeasureText(player1_name, 40), (int)player1_name_box.y + 12, 40, BLACK);
-        }
-        else DrawText("press back space",230, 300 , 40, PINK);
-    }
-     if(player1_name[0] != ' ' && (IsKeyPressed(KEY_ENTER))){
-        player1in = true;
     }
 
-    DrawRectangleRec(player2_name_box,WHITE); //text box
-    if(mouseOnText2) DrawRectangleLines((int)player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height,DARKGREEN);
-
-    DrawText(player2_name, (int)player2_name_box.x+5, (int)player2_name_box.y+8, 40, MAROON);
-
-    DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
-
-    if(mouseOnText2){
-        if(letterCounter < MAX_NAME_CHAR)
-        {
-
-            if(((framesCounter/20)%2) == 0) DrawText("_",(int)player2_name_box.x + 8 + MeasureText(player2_name, 40), (int)player2_name_box.y + 12, 40, BLACK);
-        }
-        else DrawText("press back space",230, 300 , 40, PINK);
-    }
-    if(player2_name[0] != '\0' && (IsKeyPressed(KEY_ENTER))){
-        player2in = true;
-    }
-
-
-DrawRectangleRec(player3_name_box,WHITE); //text box
-    if(mouseOnText3) DrawRectangleLines((int)player3_name_box.x,player3_name_box.y,player3_name_box.width,player3_name_box.height,DARKGREEN);
-
-    DrawText(player3_name, (int)player3_name_box.x+5, (int)player3_name_box.y+8, 40, MAROON);
-
-    DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
-
-    if(mouseOnText3){
-        if(letterCounter < MAX_NAME_CHAR)
-        {
-
-            if(((framesCounter/20)%2) == 0) DrawText("_",(int)player3_name_box.x + 8 + MeasureText(player3_name, 40), (int)player3_name_box.y + 12, 40, BLACK);
-        }
-        else DrawText("press back space",230, 300 , 40, PINK);
-    }
-     if(player3_name[0] != ' ' && (IsKeyPressed(KEY_ENTER))){
-        player3in = true;
-    }
-    //     DrawTextureEx(dice_menu,{1000,300},0,0.5f,RAYWHITE);
-       
-    //     // DrawTextureEx(dice_menu2,{700,400},0,0.5f,RAYWHITE);
-
-    //     DrawTextureEx(piece_menu,{100,70},0,0.5f,RAYWHITE);
-
-
-        // DrawTextureEx(option_bg,(Vector2){screenWidth/2,(screenHeight/2)},0,1.0f,RAYWHITE);
-
-        Rectangle option_bg_src = {0,0,option_bg.width,option_bg.height};
-        Rectangle option_bg_des = {0,0,option_bg.width,option_bg.height};
-
-    //    DrawTexturePro(option_bg,option_bg_src,option_bg_des,{0,0},0,RAYWHITE);
-        
-
-        Rectangle single_player_src = {0,0,single_player.width,single_player.height};
-        Rectangle single_player_des = {400,300,single_player_src.width,single_player_src.height};
-
-    //    DrawTexturePro(single_player,single_player_src,single_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
-
-       Rectangle multi_player_src = {0,0,multi_player.width,multi_player.height};
-        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50,300,multi_player_src.width,multi_player_src.height};
-
-    //    DrawTexturePro(multi_player,multi_player_src,multi_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
-
-    if (CheckCollisionPointRec(mouseposition, multi_player_des)){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-     
-        }
-}
-
-    //    DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80},0,0.2f,RAYWHITE);  //snl title
-
-
-        Rectangle play_button_src = {0,0,play_button.width,play_button.height};
-        Rectangle play_button_des = {screenWidth/2,screenHeight/2,100,100};
-
-    //    DrawTexturePro(play_button,play_button_src,play_button_des,{0,0},0,RAYWHITE);
-
-if (CheckCollisionPointRec(mouseposition, play_button_des)){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        menu_state2 = true;
-
-    }
-}
-        // DrawTextureEx(setting_button,{20,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
-
-        Rectangle setting_button_src = {0,0,setting_button.width,setting_button.height};
-        Rectangle setting_button_des = {screenWidth/2,screenHeight/2,100,100};
-
-    //    DrawTexturePro(setting_button,setting_button_src,setting_button_des,{0,0},0,RAYWHITE);
-
-
-        Rectangle submit_button_src = {0,0,submit_button.width,submit_button.height};
-        Rectangle submit_button_des = {screenWidth/2,screenHeight/2,submit_button.width*0.5,submit_button.height*0.5};
-
-       DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
-
-if (CheckCollisionPointRec(mouseposition, submit_button_des)){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        menu_state1 = false;
-        menu_state2 = true;
-    }
-}
-        //menu state 1
-        if(menu_state1){
-    menu_state2,menu_state3,menu_state4,menu_state5,menu_state6,menu_state7= false;
-
-    }
-
-         //menu state 2
-        if(menu_state2){
-
-    }
-
-         //menu state 3
-        if(menu_state3){
-    menu_state1,menu_state2,menu_state4,menu_state5,menu_state6,menu_state7= false;
-   
-    }
-
-         //menu state 4
-        if(menu_state4){
-    menu_state1,menu_state2,menu_state3,menu_state5,menu_state6,menu_state7= false;
-   
-    }
-
-         //menu state 5
-        if(menu_state5){
-    menu_state1,menu_state2,menu_state3,menu_state4,menu_state6,menu_state7= false;
-   
-    }
-
-           //menu state 6
-        if(menu_state6){
-    menu_state1,menu_state2,menu_state3,menu_state4,menu_state5,menu_state7= false;
-   
-    }
-
-             //menu state 7
+             //menu state 7 pause screen
         if(menu_state7){
-    menu_state1,menu_state2,menu_state3,menu_state4,menu_state5,menu_state6= false;
+    menu_state1 = false;
+    menu_state2 = false;
+    menu_state3 = false;
+    menu_state4 = false;
+    menu_state5 = false;
+    menu_state6 = false;
    
     }
 

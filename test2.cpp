@@ -11,7 +11,7 @@ using namespace std;
 // 3 choose multi or single     option box 
 // 4 single player options      option bg
 // 5 multiplayer options        option bg
-// 6 game menu  
+// 6 game screen  
 // 7 game pause menu
 
 
