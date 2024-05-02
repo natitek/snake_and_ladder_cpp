@@ -40,22 +40,28 @@ float initialpositiony = 666;
 float temp;
 int initial;
 
-bool player1turn = true;
+bool menu_state1;
+bool menu_state2;
+bool menu_state3;
+bool menu_state4;
+bool menu_state5;
+bool menu_state6;
+bool menu_state7;
+
+bool player1in = false;
+bool player2in = false;
+bool player3in = false;
+bool player4in = false;
+
+bool player1turn = false;
 bool player2turn = false;
 bool player3turn = false;
 bool player4turn = false;
 
-bool player1turnb = true;
-bool player2turnb = false;
-bool player3turnb = false;
-bool player4turnb = false;
-
-int offscreen = 0;
-
 char player1_name[MAX_NAME_CHAR + 1] = "\0";
-// char player2_name[MAX_NAME_CHAR + 1] = "\0";
-// char player3_name[MAX_NAME_CHAR + 1] = "\0";
-// char player4_name[MAX_NAME_CHAR + 1] = "\0";
+char player2_name[MAX_NAME_CHAR + 1] = "\0";
+char player3_name[MAX_NAME_CHAR + 1] = "\0";
+char player4_name[MAX_NAME_CHAR + 1] = "\0";
 
 int letterCounter = 0;
  
@@ -201,6 +207,10 @@ Texture2D single_player = LoadTexture("src/img/single_player.png");
 
 Texture2D multi_player = LoadTexture("src/img/multi_player.png");
 
+Texture2D option_bg = LoadTexture("src/img/option_bg.png");
+
+Texture2D submit_button = LoadTexture("src/img/submit.png");
+
 
 
 
@@ -227,9 +237,24 @@ std::vector<int> ladderbottom = {4, 8, 1, 21, 50, 28, 71, 80};
 
 Color trans = {0,0,0,0};
 
-Rectangle player1_name_box = {400,500,225,50};
-bool mouseOnText = false;
+Rectangle player1_name_box = {400,100,225,50};
+Rectangle player2_name_box = {400,200,225,50};
+Rectangle player3_name_box = {400,300,225,50};
+Rectangle player4_name_box = {400,400,225,50};
+
+
+bool mouseOnText1 = false;
+bool mouseOnText2 = false;
+bool mouseOnText3 = false;
+bool mouseOnText4 = false;
+
 int framesCounter = 0;
+
+// menu states
+
+menu_state1 = true;
+
+
 
 //     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -289,32 +314,13 @@ for (int i = 0; i <= 6; i++){
         }
       }
 
-//check if player lands on s or l
-//  for (int n : snakehead)
-//         {
-//             if (player1.position == n)
-//             {
-//                 auto index = find(snakehead.begin(), snakehead.end(), n) - snakehead.begin();
-//                 player1.position = snaketail[index];
-//             }
-//         }
-// for (int n : ladderbottom)
-//         {
-//             if (player1.position == n)
-//             {
-//                 auto index = find(ladderbottom.begin(), laddertop.end(), n) - ladderbottom.begin();
-//                 player1.position = laddertop[index];
-//             }
-//         }
-
-
 
 //Text logic
    
-   if (CheckCollisionPointRec(GetMousePosition(),player1_name_box)) mouseOnText = true;
-   else mouseOnText = false;
+   if (CheckCollisionPointRec(GetMousePosition(),player1_name_box)) mouseOnText1 = true;
+   else mouseOnText1 = false;
 
-   if(mouseOnText){
+   if(mouseOnText1){
     SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
     int key = GetCharPressed();
@@ -335,8 +341,66 @@ for (int i = 0; i <= 6; i++){
    }
    else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
-   if(mouseOnText) framesCounter++;
+   if(mouseOnText1) framesCounter++;
    else framesCounter = 0;
+
+
+   if (CheckCollisionPointRec(GetMousePosition(),player2_name_box)) mouseOnText2 = true;
+   else mouseOnText2 = false;
+
+   if(mouseOnText2){
+    SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+    int key2 = GetCharPressed();
+
+    while(key2 > 0){
+        if((key2 >= 32) && (key2 <= 125) && (letterCounter < MAX_NAME_CHAR)){
+            player2_name[letterCounter] = (char)key2;
+            player2_name[letterCounter+1] = '\0';
+            letterCounter++;
+        }
+        key2 = GetCharPressed();
+    }
+    if(IsKeyPressed(KEY_BACKSPACE)){
+        letterCounter--;
+        if(letterCounter <0) letterCounter = 0;
+        player2_name[letterCounter] = '\0';
+    }
+   }
+   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
+   if(mouseOnText2) framesCounter++;
+   else framesCounter = 0;
+
+
+
+   if (CheckCollisionPointRec(GetMousePosition(),player3_name_box)) mouseOnText3 = true;
+   else mouseOnText3 = false;
+
+   if(mouseOnText3){
+    SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+    int key3 = GetCharPressed();
+
+    while(key3 > 0){
+        if((key3 >= 32) && (key3 <= 125) && (letterCounter < MAX_NAME_CHAR)){
+            player3_name[letterCounter] = (char)key3;
+            player3_name[letterCounter+1] = '\0';
+            letterCounter++;
+        }
+        key3 = GetCharPressed();
+    }
+    if(IsKeyPressed(KEY_BACKSPACE)){
+        letterCounter--;
+        if(letterCounter <0) letterCounter = 0;
+        player3_name[letterCounter] = '\0';
+    }
+   }
+   else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
+   if(mouseOnText3) framesCounter++;
+   else framesCounter = 0;
+
 
 
 //         // Draw
@@ -406,18 +470,18 @@ for (int i = 0; i <= 6; i++){
 
          //--- MENU UI ---//
        
-       DrawTexture(bg_squares,0+offscreen,0,RAYWHITE); //background
+       DrawTexture(bg_squares,0,0,RAYWHITE); //background
 
     
 
     DrawRectangleRec(player1_name_box,WHITE); //text box
-    if(mouseOnText) DrawRectangleLines((int)player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height,DARKGREEN);
+    if(mouseOnText1) DrawRectangleLines((int)player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height,DARKGREEN);
 
     DrawText(player1_name, (int)player1_name_box.x+5, (int)player1_name_box.y+8, 40, MAROON);
 
     DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
 
-    if(mouseOnText){
+    if(mouseOnText1){
         if(letterCounter < MAX_NAME_CHAR)
         {
 
@@ -425,42 +489,155 @@ for (int i = 0; i <= 6; i++){
         }
         else DrawText("press back space",230, 300 , 40, PINK);
     }
+     if(player1_name[0] != ' ' && (IsKeyPressed(KEY_ENTER))){
+        player1in = true;
+    }
 
+    DrawRectangleRec(player2_name_box,WHITE); //text box
+    if(mouseOnText2) DrawRectangleLines((int)player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height,DARKGREEN);
+
+    DrawText(player2_name, (int)player2_name_box.x+5, (int)player2_name_box.y+8, 40, MAROON);
+
+    DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
+
+    if(mouseOnText2){
+        if(letterCounter < MAX_NAME_CHAR)
+        {
+
+            if(((framesCounter/20)%2) == 0) DrawText("_",(int)player2_name_box.x + 8 + MeasureText(player2_name, 40), (int)player2_name_box.y + 12, 40, BLACK);
+        }
+        else DrawText("press back space",230, 300 , 40, PINK);
+    }
+    if(player2_name[0] != '\0' && (IsKeyPressed(KEY_ENTER))){
+        player2in = true;
+    }
+
+
+DrawRectangleRec(player3_name_box,WHITE); //text box
+    if(mouseOnText3) DrawRectangleLines((int)player3_name_box.x,player3_name_box.y,player3_name_box.width,player3_name_box.height,DARKGREEN);
+
+    DrawText(player3_name, (int)player3_name_box.x+5, (int)player3_name_box.y+8, 40, MAROON);
+
+    DrawText(TextFormat("Input name", letterCounter, MAX_NAME_CHAR), 400,250,20, BLUE);
+
+    if(mouseOnText3){
+        if(letterCounter < MAX_NAME_CHAR)
+        {
+
+            if(((framesCounter/20)%2) == 0) DrawText("_",(int)player3_name_box.x + 8 + MeasureText(player3_name, 40), (int)player3_name_box.y + 12, 40, BLACK);
+        }
+        else DrawText("press back space",230, 300 , 40, PINK);
+    }
+     if(player3_name[0] != ' ' && (IsKeyPressed(KEY_ENTER))){
+        player3in = true;
+    }
     //     DrawTextureEx(dice_menu,{1000,300},0,0.5f,RAYWHITE);
        
     //     // DrawTextureEx(dice_menu2,{700,400},0,0.5f,RAYWHITE);
 
     //     DrawTextureEx(piece_menu,{100,70},0,0.5f,RAYWHITE);
 
-        Rectangle single_player_src = {0,0,single_player.width,single_player.height};
-        Rectangle single_player_des = {400,300,single_player_src.width+offscreen,single_player_src.height};
 
-       DrawTexturePro(single_player,single_player_src,single_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
+        // DrawTextureEx(option_bg,(Vector2){screenWidth/2,(screenHeight/2)},0,1.0f,RAYWHITE);
+
+        Rectangle option_bg_src = {0,0,option_bg.width,option_bg.height};
+        Rectangle option_bg_des = {0,0,option_bg.width,option_bg.height};
+
+    //    DrawTexturePro(option_bg,option_bg_src,option_bg_des,{0,0},0,RAYWHITE);
+        
+
+        Rectangle single_player_src = {0,0,single_player.width,single_player.height};
+        Rectangle single_player_des = {400,300,single_player_src.width,single_player_src.height};
+
+    //    DrawTexturePro(single_player,single_player_src,single_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
 
        Rectangle multi_player_src = {0,0,multi_player.width,multi_player.height};
-        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50+offscreen,300,multi_player_src.width,multi_player_src.height};
+        Rectangle multi_player_des = {single_player_des.x+single_player_des.width+50,300,multi_player_src.width,multi_player_src.height};
 
-       DrawTexturePro(multi_player,multi_player_src,multi_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
+    //    DrawTexturePro(multi_player,multi_player_src,multi_player_des,{single_player_des.width/2,single_player_des.height/2},0,RAYWHITE);
 
+    if (CheckCollisionPointRec(mouseposition, multi_player_des)){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+     
+        }
+}
 
-       DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80+offscreen},0,0.2f,RAYWHITE);  //snl title
+    //    DrawTextureEx(menu_title,(Vector2){(screenWidth/2)-((menu_title.width*0.2f)/2),80},0,0.2f,RAYWHITE);  //snl title
 
 
         Rectangle play_button_src = {0,0,play_button.width,play_button.height};
-        Rectangle play_button_des = {screenWidth/2+offscreen,screenHeight/2+offscreen,100,100};
+        Rectangle play_button_des = {screenWidth/2,screenHeight/2,100,100};
 
-       DrawTexturePro(play_button,play_button_src,play_button_des,{0,0},0,RAYWHITE);
+    //    DrawTexturePro(play_button,play_button_src,play_button_des,{0,0},0,RAYWHITE);
 
 if (CheckCollisionPointRec(mouseposition, play_button_des)){
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        offscreen = 2000;
-        PlaySound(dice);
+        menu_state2 = true;
 
     }
 }
-        DrawTextureEx(setting_button,{20+(float)offscreen,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
+        // DrawTextureEx(setting_button,{20,(screenHeight)-(setting_button.height*0.1f+30)},0,0.1f,RAYWHITE); //settings button
 
-        
+        Rectangle setting_button_src = {0,0,setting_button.width,setting_button.height};
+        Rectangle setting_button_des = {screenWidth/2,screenHeight/2,100,100};
+
+    //    DrawTexturePro(setting_button,setting_button_src,setting_button_des,{0,0},0,RAYWHITE);
+
+
+        Rectangle submit_button_src = {0,0,submit_button.width,submit_button.height};
+        Rectangle submit_button_des = {screenWidth/2,screenHeight/2,submit_button.width*0.5,submit_button.height*0.5};
+
+       DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
+
+if (CheckCollisionPointRec(mouseposition, submit_button_des)){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        menu_state1 = false;
+        menu_state2 = true;
+    }
+}
+        //menu state 1
+        if(menu_state1){
+    menu_state2,menu_state3,menu_state4,menu_state5,menu_state6,menu_state7= false;
+
+    }
+
+         //menu state 2
+        if(menu_state2){
+
+    }
+
+         //menu state 3
+        if(menu_state3){
+    menu_state1,menu_state2,menu_state4,menu_state5,menu_state6,menu_state7= false;
+   
+    }
+
+         //menu state 4
+        if(menu_state4){
+    menu_state1,menu_state2,menu_state3,menu_state5,menu_state6,menu_state7= false;
+   
+    }
+
+         //menu state 5
+        if(menu_state5){
+    menu_state1,menu_state2,menu_state3,menu_state4,menu_state6,menu_state7= false;
+   
+    }
+
+           //menu state 6
+        if(menu_state6){
+    menu_state1,menu_state2,menu_state3,menu_state4,menu_state5,menu_state7= false;
+   
+    }
+
+             //menu state 7
+        if(menu_state7){
+    menu_state1,menu_state2,menu_state3,menu_state4,menu_state5,menu_state6= false;
+   
+    }
+
+
+
         // std::cout << GetTime() << std::endl;
         EndDrawing();
         DrawText(TextFormat("%i", player4.position), 100, 520, 80, LIGHTGRAY);

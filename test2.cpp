@@ -6,13 +6,13 @@
 using namespace std;
 
 // States
-// 1 start menu
-// 2 settings
-// 3 choose multi or single
-// 4 single player options
-// 5 multiplayer options
-// 6 game menu
-// 7 game menu pause
+// 1 start                      menu  play setting title
+// 2 settings                   option bg
+// 3 choose multi or single     option box 
+// 4 single player options      option bg
+// 5 multiplayer options        option bg
+// 6 game menu  
+// 7 game pause menu
 
 
 
