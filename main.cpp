@@ -8,6 +8,8 @@
 #include <fstream>
 
 
+#define MAX_VOLUME 10
+#define MIN_VOLUME 0
 #define MAX_NAME_CHAR 10
 
 
@@ -63,7 +65,7 @@ char player2_name[MAX_NAME_CHAR + 1] = "\0";
 char player3_name[MAX_NAME_CHAR + 1] = "\0";
 char player4_name[MAX_NAME_CHAR + 1] = "\0";
 
-int letterCounter = 0;
+
  
 
 std::vector <Vector2> coordinates;
@@ -221,7 +223,7 @@ Sound dice = LoadSound("src/audio/dice.mp3");
 
 
 
-// PlaySound(backgroundsound);
+PlaySound(backgroundsound);
 
 //      //generate coordinates before game starts
       generatecoordinates();
@@ -271,34 +273,7 @@ menu_state1 = true;
         // if(player1);
 
 
-        else if (IsKeyReleased(KEY_A))
-        {
-            generated = roll();
-            player1.position += generated;
-            PlaySound(dice);
-        }
-
-        else if (IsKeyReleased(KEY_B))
-        {
-            generated = roll();
-            player2.position += generated;
-            PlaySound(dice);
-        }
-
-
-        else if (IsKeyReleased(KEY_C))
-        {
-            generated = roll();
-            player3.position += generated;
-            PlaySound(dice);
-        }
-
- else if (IsKeyReleased(KEY_D))
-        {
-            generated = roll();
-            player4.position += generated;
-            PlaySound(dice);
-        }
+       
 
 
 for (int i = 0; i <= 6; i++){
@@ -338,18 +313,16 @@ for (int i = 0; i <= 6; i++){
         Rectangle orangedestination = (Rectangle){coordinates[player4.position].x+10, coordinates[player4.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
         //player 1
-        //  DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+      
 
         //   //player 2
-        //  DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
+     
 
       
         //   //player 3
-        //  DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
-      
+     
         //   //player 4
-        //  DrawTexturePro(blue_sprite, orangesource, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, ORANGE);
-
+       
 
 
 
@@ -411,6 +384,36 @@ for (int i = 0; i <= 6; i++){
             menu_state1,menu_state3,menu_state4,menu_state5,menu_state6,menu_state7= false;
         DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
         DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+        
+        //volume controllers
+       
+        int volumeofbg = 4;
+        int volumeofsfx = 4;
+    
+      if(IsKeyPressed(KEY_EQUAL))volumeofbg++;
+      else if(IsKeyPressed(KEY_MINUS))volumeofbg--;
+       
+
+        // if(IsKeyPressed(KEY_NINE))volumeofsfx--;
+        // else if(IsKeyPressed(KEY_ZERO))volumeofsfx++;
+
+        // if (volumeofbg > MAX_VOLUME) volumeofbg = MAX_VOLUME;
+        // else if (volumeofbg < MAX_VOLUME) volumeofbg = MIN_VOLUME;
+
+        // if (volumeofsfx > MAX_VOLUME) volumeofsfx = MAX_VOLUME;
+        // else if (volumeofsfx < MAX_VOLUME) volumeofsfx = MIN_VOLUME;
+
+        for (int i = 0; i < MAX_VOLUME; i++)
+            {
+                if (i < volumeofbg) DrawRectangle(250 + 70*i, 205, 70, 30, RED);
+                DrawRectangleLines(250 + 70*i, 205, 70, 30, MAROON);
+            }
+
+            // for (int i = 0; i < MAX_VOLUME; i++)
+            // {
+            //     if (i < volumeofsfx) DrawRectangle(250 + 70*i, 405, 70, 30, GREEN);
+            //     DrawRectangleLines(250 + 70*i, 405, 70, 30, MAROON);
+            // }
           // press backspace to return to the main menu
         if(IsKeyPressed(KEY_BACKSPACE) && menu_state2 == true){
              menu_state1 =true;
@@ -461,7 +464,7 @@ for (int i = 0; i <= 6; i++){
     DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
 
     if (CheckCollisionPointRec(mouseposition, submit_button_des) && menu_state4 == true){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){ menu_state6 = true;
     }
 }
 
@@ -486,7 +489,7 @@ for (int i = 0; i <= 6; i++){
     DrawText("multiplayer options", 400,100, 50, LIGHTGRAY);
     DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
     if (CheckCollisionPointRec(mouseposition, submit_button_des)){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){ menu_state6 = true;
     }
 }
  if(IsKeyPressed(KEY_BACKSPACE) && menu_state5 == true){
@@ -505,7 +508,7 @@ for (int i = 0; i <= 6; i++){
     menu_state5 = false;
     menu_state7 = false;
    
-
+ DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
   DrawTexturePro(snakeimage, source, Dest, (Vector2){Dest.width / 2, (Dest.height / 2)}, 0, WHITE);
 
         DrawText("press R to roll", 100, 110, 20, GREEN);
@@ -525,6 +528,48 @@ for (int i = 0; i <= 6; i++){
         DrawText(TextFormat("%i", player3.position), 100, 420, 80, LIGHTGRAY);
 
          DrawText("players4 Positon : ", 100,480, 20, LIGHTGRAY);
+
+        if (IsKeyReleased(KEY_A))
+        {
+            generated = roll();
+            player1.position += generated;
+            PlaySound(dice);
+        }
+
+        else if (IsKeyReleased(KEY_B))
+        {
+            generated = roll();
+            player2.position += generated;
+            PlaySound(dice);
+        }
+
+
+        else if (IsKeyReleased(KEY_C))
+        {
+            generated = roll();
+            player3.position += generated;
+            PlaySound(dice);
+        }
+
+ else if (IsKeyReleased(KEY_D))
+        {
+            generated = roll();
+            player4.position += generated;
+            PlaySound(dice);
+        }
+
+    DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+    DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
+    DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
+    DrawTexturePro(blue_sprite, orangesource, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, ORANGE);
+
+ if(IsKeyPressed(KEY_BACKSPACE) && menu_state6 == true){
+             menu_state3 =true;
+            menu_state6 = false;
+           
+        }
+    
+
 
     }
 
