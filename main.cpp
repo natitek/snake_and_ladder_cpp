@@ -40,7 +40,6 @@ float boxsize = 70;
 float initialpositionx = 260;
 float initialpositiony = 666;
 float temp;
-int initial;
 
 bool menu_state1;
 bool menu_state2;
@@ -69,15 +68,6 @@ char player4_name[MAX_NAME_CHAR + 1] = "\0";
  
 
 std::vector <Vector2> coordinates;
-
-
-void inbetween(int initialsent , int destination){
-    initial = initialsent;
-        for(int initial; initial < destination; initial++){
-            if(GetTime() >= 1.00){
-        player1.position = initial;}
-    }
-}
 
 
 // void checkwin(player theplayer){
@@ -212,6 +202,10 @@ Texture2D submit_button = LoadTexture("src/img/submit.png");
 
 Texture2D main_menu_bg = LoadTexture("src/img/main_menu_bg.png");
 
+Texture2D plus_button = LoadTexture("src/img/plus_button.png");
+Texture2D minus_button = LoadTexture("src/img/minus_button.png");
+
+
 
 
 //     // Sounds
@@ -237,7 +231,7 @@ std::vector<int> ladderbottom = {4, 8, 1, 21, 50, 28, 71, 80};
 
 Color trans = {0,0,0,0};
 
-Rectangle player1_name_box = {400,100,225,50};
+Rectangle player1_name_box = {430,289,225,50};
 Rectangle player2_name_box = {400,200,225,50};
 Rectangle player3_name_box = {400,300,225,50};
 Rectangle player4_name_box = {400,400,225,50};
@@ -248,7 +242,13 @@ bool mouseOnText2 = false;
 bool mouseOnText3 = false;
 bool mouseOnText4 = false;
 
-int framesCounter = 0;
+
+
+int num_of_ai = 1;
+int num_of_humans = 2;
+
+  int volumeofbg = 4;
+int volumeofsfx = 4;
 
 // menu states
 
@@ -356,8 +356,7 @@ for (int i = 0; i <= 6; i++){
         Rectangle setting_button_des = {50,600,100,100};
 
         Rectangle submit_button_src = {0,0,submit_button.width,submit_button.height};
-        Rectangle submit_button_des = {screenWidth/2,screenHeight/2,submit_button.width*0.5,submit_button.height*0.5};
-
+        Rectangle submit_button_des = {564,500,submit_button.width*0.3,submit_button.height*0.3};
      
 
 
@@ -386,34 +385,46 @@ for (int i = 0; i <= 6; i++){
         DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
         
         //volume controllers
-       
-        int volumeofbg = 4;
-        int volumeofsfx = 4;
-    
-      if(IsKeyPressed(KEY_EQUAL))volumeofbg++;
-      else if(IsKeyPressed(KEY_MINUS))volumeofbg--;
-       
 
-        // if(IsKeyPressed(KEY_NINE))volumeofsfx--;
-        // else if(IsKeyPressed(KEY_ZERO))volumeofsfx++;
+        
+       
+      
+    
+      
+       
+        SetSoundVolume(backgroundsound,(float)volumeofbg/10);
+     
 
         // if (volumeofbg > MAX_VOLUME) volumeofbg = MAX_VOLUME;
         // else if (volumeofbg < MAX_VOLUME) volumeofbg = MIN_VOLUME;
 
         // if (volumeofsfx > MAX_VOLUME) volumeofsfx = MAX_VOLUME;
         // else if (volumeofsfx < MAX_VOLUME) volumeofsfx = MIN_VOLUME;
-
+        DrawText("Settings",screenWidth/2-130,100,70,GRAY);
+        DrawText("Music",250,170,40,RED);
         for (int i = 0; i < MAX_VOLUME; i++)
             {
                 if (i < volumeofbg) DrawRectangle(250 + 70*i, 205, 70, 30, RED);
                 DrawRectangleLines(250 + 70*i, 205, 70, 30, MAROON);
             }
+DrawText("SFX",250,285,40,RED);
+            for (int i = 0; i < MAX_VOLUME; i++)
+            {
+                if (i < volumeofsfx) DrawRectangle(250 + 70*i, 321, 70, 30, GREEN);
+                DrawRectangleLines(250 + 70*i, 321, 70, 30, MAROON);
+            }
 
-            // for (int i = 0; i < MAX_VOLUME; i++)
-            // {
-            //     if (i < volumeofsfx) DrawRectangle(250 + 70*i, 405, 70, 30, GREEN);
-            //     DrawRectangleLines(250 + 70*i, 405, 70, 30, MAROON);
-            // }
+
+               if((IsKeyPressed(KEY_NINE))  && menu_state2 == true)volumeofsfx--;
+         else if((IsKeyPressed(KEY_ZERO))  && menu_state2 == true)volumeofsfx++;
+
+            if((IsKeyPressed(KEY_EQUAL)) && menu_state2 == true)volumeofbg++;
+          else if((IsKeyPressed(KEY_MINUS)) && menu_state2 == true)volumeofbg--;
+
+    SetSoundVolume(backgroundsound,volumeofbg/10);
+        
+
+
           // press backspace to return to the main menu
         if(IsKeyPressed(KEY_BACKSPACE) && menu_state2 == true){
              menu_state1 =true;
@@ -460,14 +471,37 @@ for (int i = 0; i <= 6; i++){
    DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
    DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
     DrawText("Single player options", 400,100, 50, LIGHTGRAY);
-//    DrawRectangleRec(player1_name_box,WHITE);
+
+    DrawText("player name",430,269,20,GRAY);
+    
+   DrawRectangleRec(player1_name_box,WHITE);
+
+
+    DrawText("ai players",533,360,40,BLACK);
+    DrawText(TextFormat("%i", num_of_ai),620,420,40,BLACK);
+
+    DrawTextureEx(plus_button,{700,400},0,1,RAYWHITE);
+    DrawTextureEx(minus_button,{500,400},0,1,RAYWHITE);
+
     DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
 
-    if (CheckCollisionPointRec(mouseposition, submit_button_des) && menu_state4 == true){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){ menu_state6 = true;
-    }
-}
 
+
+ if(IsKeyPressed(KEY_P) && menu_state4 == true){
+             num_of_ai++;
+             }
+    
+
+ if(IsKeyPressed(KEY_O) && menu_state4 == true){
+             num_of_ai--;
+             }
+    
+    if(num_of_ai > 3)num_of_ai--;
+    else if(num_of_ai < 1)num_of_ai++;
+
+        if (CheckCollisionPointRec(mouseposition, submit_button_des) && menu_state4 == true){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){ menu_state6 = true;}
+}
 
  if(IsKeyPressed(KEY_BACKSPACE) && menu_state4 == true){
              menu_state3 =true;
@@ -486,8 +520,27 @@ for (int i = 0; i <= 6; i++){
     menu_state6 = false;
     menu_state7 = false;
     DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
-    DrawText("multiplayer options", 400,100, 50, LIGHTGRAY);
+    DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+    DrawText("multiplayer options", 450,100, 50, LIGHTGRAY);
     DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
+
+     DrawText("players",562,360,40,BLACK);
+    DrawText(TextFormat("%i", num_of_humans),620,420,40,BLACK);
+
+    DrawTextureEx(plus_button,{700,400},0,1,RAYWHITE);
+    DrawTextureEx(minus_button,{500,400},0,1,RAYWHITE);
+ if(IsKeyPressed(KEY_P) && menu_state5 == true){
+             num_of_humans++;
+             }
+    
+
+ if(IsKeyPressed(KEY_O) && menu_state5 == true){
+             num_of_humans--;
+             }
+    
+    if(num_of_humans> 4)num_of_humans--;
+    else if(num_of_humans < 2)num_of_humans++;
+
     if (CheckCollisionPointRec(mouseposition, submit_button_des)){
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){ menu_state6 = true;
     }

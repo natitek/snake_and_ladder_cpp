@@ -16,6 +16,6 @@ void playerturn(){
 
 int main()
 {
-      
+      cout << (1/20)%2 << endl;
       return 0;
 }
