@@ -1,5 +1,4 @@
 #include "raylib.h"
-#include "raygui.h"
 #include "iostream"
 #include "vector"
 #include <math.h>
@@ -54,7 +53,7 @@ bool player2in = false;
 bool player3in = false;
 bool player4in = false;
 
-bool player1turn = false;
+bool player1turn = true;
 bool player2turn = false;
 bool player3turn = false;
 bool player4turn = false;
@@ -64,7 +63,19 @@ char player2_name[MAX_NAME_CHAR + 1] = "\0";
 char player3_name[MAX_NAME_CHAR + 1] = "\0";
 char player4_name[MAX_NAME_CHAR + 1] = "\0";
 
+bool mouseOnTextBox = false;
+bool mouseOnTextBox1 = false;
+bool mouseOnTextBox2 = false;
+bool mouseOnTextBox3 = false;
+bool mouseOnTextBox4 = false;
 
+int numberofchar = 0;
+int numberofchar1 = 0;
+int numberofchar2 = 0;
+int numberofchar3 = 0;
+int numberofchar4 = 0;
+
+bool multi = false;
  
 
 std::vector <Vector2> coordinates;
@@ -141,14 +152,41 @@ void loadPlayerData()
        std:: cout << "Unable to open file for reading." << std::endl;
     }
 }
-void savePlayerData(int n)
+void savePlayerData()
 {
+    for(int i=0;i<players.size();i++){
+        if(player1_name==players[i].name&&player1in){
+            players[i].name=player1.name;
+            players[i].wins=player1.wins;
+            players[i].losses=player1.losses;
+            players[i].points=player1.points;
+        }
+        if(player2_name==players[i].name&&player2in){
+            players[i].name=player2.name;
+            players[i].wins=player2.wins;
+            players[i].losses=player2.losses;
+           players[i].points=player2.points;
+        }
+        if(player3_name==players[i].name&&player3in){
+            players[i].name=player3.name;
+            players[i].wins=player3.wins;
+           players[i].losses=player3.losses;
+            players[i].points=player3.points;
+        }
+        if(player4_name==players[i].name&&player4in){
+            players[i].name=player4.name;
+            players[i].wins=player4.wins;
+            players[i].losses=player4.losses;
+           players[i].points=player4.points;
+        }
+    }
+
     std::ofstream outputFile("player_data.txt");
     if (outputFile.is_open())
     {
         for (player &playerr : players)
         {
-            playerr.points = (playerr.wins * n);
+            playerr.points = (playerr.wins);
             outputFile << playerr.name << " " << playerr.wins << " " << playerr.losses << " " << playerr.points<< "\n";
         }
         outputFile.close();
@@ -157,18 +195,16 @@ void savePlayerData(int n)
     {
         std::cout << "Unable to open file for writing." << std::endl;
     }
+
 }
 
 
 void initializePlayer(player &newPlayer)
 {
-    std::cout << "Enter Name: ";
-    getline(std::cin, newPlayer.name);
     newPlayer.wins = 0;
     newPlayer.losses = 0;
     newPlayer.points = 0;
     players.push_back(newPlayer);
-
 }
 
 
@@ -217,7 +253,7 @@ Sound dice = LoadSound("src/audio/dice.mp3");
 
 
 
-PlaySound(backgroundsound);
+// PlaySound(backgroundsound);
 
 //      //generate coordinates before game starts
       generatecoordinates();
@@ -231,17 +267,10 @@ std::vector<int> ladderbottom = {4, 8, 1, 21, 50, 28, 71, 80};
 
 Color trans = {0,0,0,0};
 
-Rectangle player1_name_box = {430,289,225,50};
+Rectangle player1_name_box = {514,241,300,50};
 Rectangle player2_name_box = {400,200,225,50};
 Rectangle player3_name_box = {400,300,225,50};
 Rectangle player4_name_box = {400,400,225,50};
-
-
-bool mouseOnText1 = false;
-bool mouseOnText2 = false;
-bool mouseOnText3 = false;
-bool mouseOnText4 = false;
-
 
 
 int num_of_ai = 1;
@@ -450,8 +479,10 @@ DrawText("SFX",250,285,40,RED);
            if (CheckCollisionPointRec(mouseposition, single_player_des) && menu_state1 != true && menu_state2 != true && menu_state5 != true){
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state4 = true;}
 
+
     if (CheckCollisionPointRec(mouseposition, multi_player_des) && menu_state1 != true && menu_state2 != true  && menu_state4 != true){
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state5 = true;}
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))menu_state5 = true;
+    multi = true;}
 
  if(IsKeyPressed(KEY_BACKSPACE) && menu_state3 == true){
              menu_state1 =true;
@@ -472,9 +503,13 @@ DrawText("SFX",250,285,40,RED);
    DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
     DrawText("Single player options", 400,100, 50, LIGHTGRAY);
 
-    DrawText("player name",430,269,20,GRAY);
+    DrawText("player name",player1_name_box.x,player1_name_box.y-30,20,GRAY);
     
    DrawRectangleRec(player1_name_box,WHITE);
+   if(mouseOnTextBox && menu_state4) DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, RED);
+            else DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, DARKGRAY);
+
+    DrawText(player1_name,player1_name_box.x +5,player1_name_box.y + 8, 40, BLUE);
 
 
     DrawText("ai players",533,360,40,BLACK);
@@ -485,8 +520,29 @@ DrawText("SFX",250,285,40,RED);
 
     DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
 
+if(CheckCollisionPointRec(mouseposition,player1_name_box) && menu_state4 == true) mouseOnTextBox = true;
+else mouseOnTextBox = false;
+    if(mouseOnTextBox && menu_state4){
+        SetMouseCursor(MOUSE_CURSOR_IBEAM);
+        int key = GetCharPressed();
+        while(key > 0){
+            if(numberofchar < MAX_NAME_CHAR){
+                player1_name[numberofchar] = (char)key;
+                player1_name[numberofchar+1] = '\0';
+                numberofchar++;
+            }
+        key = GetCharPressed();
+        }
+        if (IsKeyPressed(KEY_RIGHT_SHIFT)){
+            numberofchar--;
+            if(numberofchar < 0) numberofchar = 0;
+            player1_name[numberofchar] = '\0';
+        }
+    }
+    else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
 
+    
  if(IsKeyPressed(KEY_P) && menu_state4 == true){
              num_of_ai++;
              }
@@ -522,17 +578,163 @@ DrawText("SFX",250,285,40,RED);
     DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
     DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
     DrawText("multiplayer options", 450,100, 50, LIGHTGRAY);
-    DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
+  
+
+
+  
+   
+
+Rectangle player1_name_box = {400,100,225,50};
+
+if(num_of_humans == 2){
+    DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+    DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+    DrawText("player 1 name",player1_name_box.x,player1_name_box.y-30,20,GRAY);
+     DrawText("player 2 name",player2_name_box.x,player2_name_box.y-30,20,GRAY);
+    DrawRectangleRec(player1_name_box,WHITE);
+    DrawRectangleRec(player2_name_box,WHITE);
+
+     if(mouseOnTextBox1 && menu_state5) DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, RED);
+            else DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, DARKGRAY);
+    if(mouseOnTextBox2 && menu_state5) DrawRectangleLines(player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height, RED);
+            else DrawRectangleLines(player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height, DARKGRAY);
+  
+    DrawText(player1_name,player1_name_box.x +5,player1_name_box.y + 8, 40, BLUE);
+    DrawText(player2_name,player2_name_box.x +5,player2_name_box.y + 8, 40, BLUE);
+}
+else if(num_of_humans == 3){
+    DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+    DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+    DrawText("player 1 name",player1_name_box.x,player1_name_box.y-30,20,GRAY);
+    DrawText("player 2 name",player2_name_box.x,player2_name_box.y-30,20,GRAY);
+    DrawText("player 3 name",player3_name_box.x,player3_name_box.y-30,20,GRAY);
+    DrawRectangleRec(player1_name_box,WHITE);
+    DrawRectangleRec(player2_name_box,WHITE);
+    DrawRectangleRec(player3_name_box,WHITE);
+
+     if(mouseOnTextBox1 && menu_state5) DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, RED);
+            else DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, DARKGRAY);
+    if(mouseOnTextBox2 && menu_state5) DrawRectangleLines(player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height, RED);
+            else DrawRectangleLines(player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height, DARKGRAY);
+    if(mouseOnTextBox3 && menu_state5) DrawRectangleLines(player3_name_box.x,player3_name_box.y,player3_name_box.width,player3_name_box.height, RED);
+            else DrawRectangleLines(player3_name_box.x,player3_name_box.y,player3_name_box.width,player3_name_box.height, DARKGRAY);
+
+    DrawText(player1_name,player1_name_box.x +5,player1_name_box.y + 8, 40, BLUE);
+    DrawText(player2_name,player2_name_box.x +5,player2_name_box.y + 8, 40, BLUE);
+    DrawText(player3_name,player3_name_box.x +5,player3_name_box.y + 8, 40, BLUE);
+}
+else if(num_of_humans == 4){
+    DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
+    DrawTextureEx(option_bg,{100,100},0,1.0f,RAYWHITE);
+    DrawText("player 1 name",player1_name_box.x,player1_name_box.y-30,20,GRAY);
+     DrawText("player 3 name",player3_name_box.x,player3_name_box.y-30,20,GRAY);
+    DrawText("player 2 name",player2_name_box.x,player2_name_box.y-30,20,GRAY);
+    DrawText("player 4 name",player4_name_box.x,player4_name_box.y-30,20,GRAY);
+
+    DrawRectangleRec(player1_name_box,WHITE);
+    DrawRectangleRec(player2_name_box,WHITE);
+    DrawRectangleRec(player3_name_box,WHITE);
+    DrawRectangleRec(player4_name_box,WHITE);
+
+ if(mouseOnTextBox1 && menu_state5) DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, RED);
+            else DrawRectangleLines(player1_name_box.x,player1_name_box.y,player1_name_box.width,player1_name_box.height, DARKGRAY);
+    if(mouseOnTextBox2 && menu_state5) DrawRectangleLines(player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height, RED);
+            else DrawRectangleLines(player2_name_box.x,player2_name_box.y,player2_name_box.width,player2_name_box.height, DARKGRAY);
+    if(mouseOnTextBox3 && menu_state5) DrawRectangleLines(player3_name_box.x,player3_name_box.y,player3_name_box.width,player3_name_box.height, RED);
+            else DrawRectangleLines(player3_name_box.x,player3_name_box.y,player3_name_box.width,player3_name_box.height, DARKGRAY);
+    if(mouseOnTextBox4 && menu_state5) DrawRectangleLines(player4_name_box.x,player4_name_box.y,player4_name_box.width,player4_name_box.height, RED);
+            else DrawRectangleLines(player4_name_box.x,player4_name_box.y,player4_name_box.width,player4_name_box.height, DARKGRAY);
+
+
+    DrawText(player1_name,player1_name_box.x +5,player1_name_box.y + 8, 40, BLUE);
+    DrawText(player2_name,player2_name_box.x +5,player2_name_box.y + 8, 40, BLUE);
+    DrawText(player3_name,player3_name_box.x +5,player3_name_box.y + 8, 40, BLUE);
+    DrawText(player4_name,player4_name_box.x +5,player4_name_box.y + 8, 40, BLUE);
+
+      
+
+}
+
+
 
      DrawText("players",562,360,40,BLACK);
     DrawText(TextFormat("%i", num_of_humans),620,420,40,BLACK);
 
     DrawTextureEx(plus_button,{700,400},0,1,RAYWHITE);
     DrawTextureEx(minus_button,{500,400},0,1,RAYWHITE);
+
+if(CheckCollisionPointRec(mouseposition,player1_name_box) && menu_state5)mouseOnTextBox1 = true;
+else mouseOnTextBox1 = false;
+
+if(CheckCollisionPointRec(mouseposition,player2_name_box) && menu_state5)mouseOnTextBox2 = true;
+else mouseOnTextBox2 = false;
+
+if(CheckCollisionPointRec(mouseposition,player3_name_box) && menu_state5)mouseOnTextBox3 = true;
+else mouseOnTextBox3 = false;
+
+if(CheckCollisionPointRec(mouseposition,player4_name_box) && menu_state5)mouseOnTextBox4 = true;
+else mouseOnTextBox4 = false;
+
+
+if(menu_state5){
+
+    //if((mouseOnTextBox1 || mouseOnTextBox2 || mouseOnTextBox3 || mouseOnTextBox4 )  && menu_state5){
+        SetMouseCursor(MOUSE_CURSOR_IBEAM);
+        int key = GetCharPressed();
+        while(key > 0){
+        if(numberofchar1 < MAX_NAME_CHAR && mouseOnTextBox1){
+                player1_name[numberofchar1] = (char)key;
+                player1_name[numberofchar1+1] = '\0';
+                numberofchar1++;
+            }
+        else if(numberofchar2 < MAX_NAME_CHAR && mouseOnTextBox2){
+                player2_name[numberofchar2] = (char)key;
+                player2_name[numberofchar2+1] = '\0';
+                numberofchar2++;
+            }
+        else if(numberofchar3 < MAX_NAME_CHAR && mouseOnTextBox3){
+                player3_name[numberofchar3] = (char)key;
+                player3_name[numberofchar3+1] = '\0';
+                numberofchar3++;
+            }
+        else if(numberofchar4 < MAX_NAME_CHAR && mouseOnTextBox4){
+                player4_name[numberofchar4] = (char)key;
+                player4_name[numberofchar4+1] = '\0';
+                numberofchar4++;
+            }
+        key = GetCharPressed();
+        }
+        if (IsKeyPressed(KEY_RIGHT_SHIFT) && mouseOnTextBox1){
+            numberofchar1--;
+            if(numberofchar1 < 0) numberofchar1 = 0;
+            player1_name[numberofchar1] = '\0';
+        }
+       else if (IsKeyPressed(KEY_RIGHT_SHIFT)  && mouseOnTextBox2){
+            numberofchar2--;
+            if(numberofchar2 < 0) numberofchar2 = 0;
+            player2_name[numberofchar2] = '\0';
+        }
+       else if (IsKeyPressed(KEY_RIGHT_SHIFT)  && mouseOnTextBox3){
+            numberofchar3--;
+            if(numberofchar3 < 0) numberofchar3 = 0;
+            player3_name[numberofchar3] = '\0';
+        }
+        else if (IsKeyPressed(KEY_RIGHT_SHIFT)  && mouseOnTextBox4){
+            numberofchar4--;
+            if(numberofchar4 < 0) numberofchar4 = 0;
+            player4_name[numberofchar4] = '\0';
+        }
+    }
+    else SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
+
+
+
  if(IsKeyPressed(KEY_P) && menu_state5 == true){
              num_of_humans++;
              }
-    
+
+DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHITE);
 
  if(IsKeyPressed(KEY_O) && menu_state5 == true){
              num_of_humans--;
@@ -564,6 +766,24 @@ DrawText("SFX",250,285,40,RED);
  DrawTextureEx(bg_squares,{0,0},0,1,RAYWHITE);
   DrawTexturePro(snakeimage, source, Dest, (Vector2){Dest.width / 2, (Dest.height / 2)}, 0, WHITE);
 
+         if (num_of_humans==1){
+        player1in=true;
+    }
+ else if (num_of_humans==2){
+        player1in=true;
+        player2in=true;
+    }
+    else if (num_of_humans==3){
+        player1in=true;
+        player2in=true;
+        player3in=true;
+    }
+    else if (num_of_humans==4){
+       player1in=true;
+        player2in=true;
+        player3in=true;
+        player4in=true;
+    }
         DrawText("press R to roll", 100, 110, 20, GREEN);
 
         DrawText(TextFormat("%i", generated), 100, 120, 80, LIGHTGRAY);
@@ -582,33 +802,119 @@ DrawText("SFX",250,285,40,RED);
 
          DrawText("players4 Positon : ", 100,480, 20, LIGHTGRAY);
 
-        if (IsKeyReleased(KEY_A))
+        if (IsKeyReleased(KEY_SPACE)&&player1in&&player1turn&&multi)
         {
             generated = roll();
+            if(player1.position+ generated > 100)continue;
             player1.position += generated;
             PlaySound(dice);
+            player1turn=false;
+            player2turn=true;
+            player3turn=false;
+            player4turn=false;
         }
 
-        else if (IsKeyReleased(KEY_B))
+        else if (IsKeyReleased(KEY_SPACE)&&player2in&&player2turn)
         {
             generated = roll();
+            if(player2.position+ generated > 100)continue;
             player2.position += generated;
             PlaySound(dice);
+            player1turn=false;
+            player2turn=false;
+            player4turn=false;
+            if(player3in){ 
+            player3turn=true;
+            }
+            else{
+                player1turn=true;
+            }
         }
 
-
-        else if (IsKeyReleased(KEY_C))
+        else if (IsKeyReleased(KEY_SPACE)&&player3in&&player3turn)
         {
             generated = roll();
+            if(player3.position+ generated > 100)continue;
             player3.position += generated;
             PlaySound(dice);
+            player1turn=false;
+            player2turn=false;
+            player3turn=false;
+            if(player4in) {player4turn=true;}
+            else{
+                player1turn=true;
+            }
         }
 
- else if (IsKeyReleased(KEY_D))
+ else if (IsKeyReleased(KEY_SPACE)&&player4in&&player4turn)
         {
             generated = roll();
+            if(player3.position+ generated > 100)continue;
             player4.position += generated;
             PlaySound(dice);
+            player1turn=true;
+            player2turn=false;
+            player3turn=false;
+            player4turn=false;
+        }
+
+if (IsKeyReleased(KEY_SPACE)&&player1in&&player1turn&&!multi)
+        {
+            generated = roll();
+            if(player1.position+ generated > 100)continue;
+            player1.position += generated;
+            PlaySound(dice);
+            player1turn=false;
+            player2turn=true;
+            player3turn=false;
+            player4turn=false;
+        }
+
+        else if (!player2in&&player2turn)
+        {
+            generated = roll();
+            WaitTime(2.0);
+            if(player2.position+ generated > 100)continue;
+            player2.position += generated;
+            PlaySound(dice);
+            player1turn=false;
+            player2turn=false;
+            player4turn=false;
+            if(num_of_ai==2){ 
+            player3turn=true;
+            }
+            else{
+                player1turn=true;
+            }
+        }
+
+        else if (IsKeyReleased(KEY_SPACE)&&!player3in&&player3turn)
+        {
+            generated = roll();
+              WaitTime(2.0);
+            if(player3.position+ generated > 100)continue;
+            player3.position += generated;
+            PlaySound(dice);
+            player1turn=false;
+            player2turn=false;
+            player3turn=false;
+            if(num_of_ai==3) {player4turn=true;}
+            else{
+                player1turn=true;
+            }
+        }
+
+ else if (!player4in&&player4turn)
+        {
+            generated = roll();
+              WaitTime(2.0);
+            if(player3.position+ generated > 100)continue;
+            player4.position += generated;
+            PlaySound(dice);
+            player1turn=true;
+            player2turn=false;
+            player3turn=false;
+            player4turn=false;
         }
 
     DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
@@ -639,7 +945,8 @@ DrawText("SFX",250,285,40,RED);
 
 
 
-        // std::cout << GetTime() << std::endl;
+        std::cout << GetTime() << std::endl;
+
         EndDrawing();
         DrawText(TextFormat("%i", player4.position), 100, 520, 80, LIGHTGRAY);
     }

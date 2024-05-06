@@ -1,4 +1,6 @@
 #include "raylib.h"
+#include "headerfile.h"
+
 
 #define NUM_FRAMES  3       // Number of frames (rectangles) for the button sprite texture
 
@@ -76,7 +78,7 @@ int main(void)
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
-
+            DrawText("Hello world",100,100,80,BLUE);
             DrawTextureRec(button, sourceRec, (Vector2){ btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
 
         EndDrawing();
