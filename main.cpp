@@ -487,6 +487,7 @@ DrawText("SFX",250,285,40,RED);
  if(IsKeyPressed(KEY_BACKSPACE) && menu_state3 == true){
              menu_state1 =true;
             menu_state3 = false;
+          
            
         }
     }
@@ -802,6 +803,69 @@ DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHIT
 
          DrawText("players4 Positon : ", 100,480, 20, LIGHTGRAY);
 
+         if (IsKeyReleased(KEY_SPACE)&&player1in&&player1turn&&!multi)
+        {
+            generated = roll();
+            if(player1.position+ generated > 100)continue;
+            player1.position += generated;
+            PlaySound(dice);
+            player1turn=false;
+            player2turn=true;
+            player3turn=false;
+            player4turn=false;
+        }
+
+        else if (!player2in&&player2turn )
+        {
+            
+            generated = roll();
+           
+            if(player2.position+ generated > 100)continue;
+            player2.position += generated;
+            PlaySound(dice);
+            player1turn=false;
+            player2turn=false;
+            player4turn=false;
+            if(num_of_ai==2 || num_of_ai == 3){ 
+            player3turn=true;
+            }
+            else{
+                player1turn=true;
+            }
+        }
+
+        else if (!player3in&&player3turn)
+        {
+         
+            generated = roll();
+             
+            if(player3.position+ generated > 100)continue;
+            player3.position += generated;
+            PlaySound(dice);
+            player1turn=false;
+            player2turn=false;
+            player3turn=false;
+            if(num_of_ai==3) {player4turn=true;}
+            else{
+                player1turn=true;
+            }
+        }
+
+ else if (!player4in&&player4turn)
+        {
+              
+            generated = roll();
+            
+            if(player3.position+ generated > 100)continue;
+            player4.position += generated;
+            PlaySound(dice);
+            player1turn=true;
+            player2turn=false;
+            player3turn=false;
+            player4turn=false;
+        }
+
+//humans
         if (IsKeyReleased(KEY_SPACE)&&player1in&&player1turn&&multi)
         {
             generated = roll();
@@ -858,64 +922,9 @@ DrawTexturePro(submit_button,submit_button_src,submit_button_des,{0,0},0,RAYWHIT
             player4turn=false;
         }
 
-if (IsKeyReleased(KEY_SPACE)&&player1in&&player1turn&&!multi)
-        {
-            generated = roll();
-            if(player1.position+ generated > 100)continue;
-            player1.position += generated;
-            PlaySound(dice);
-            player1turn=false;
-            player2turn=true;
-            player3turn=false;
-            player4turn=false;
-        }
 
-        else if (!player2in&&player2turn)
-        {
-            generated = roll();
-            WaitTime(2.0);
-            if(player2.position+ generated > 100)continue;
-            player2.position += generated;
-            PlaySound(dice);
-            player1turn=false;
-            player2turn=false;
-            player4turn=false;
-            if(num_of_ai==2){ 
-            player3turn=true;
-            }
-            else{
-                player1turn=true;
-            }
-        }
 
-        else if (IsKeyReleased(KEY_SPACE)&&!player3in&&player3turn)
-        {
-            generated = roll();
-              WaitTime(2.0);
-            if(player3.position+ generated > 100)continue;
-            player3.position += generated;
-            PlaySound(dice);
-            player1turn=false;
-            player2turn=false;
-            player3turn=false;
-            if(num_of_ai==3) {player4turn=true;}
-            else{
-                player1turn=true;
-            }
-        }
 
- else if (!player4in&&player4turn)
-        {
-            generated = roll();
-              WaitTime(2.0);
-            if(player3.position+ generated > 100)continue;
-            player4.position += generated;
-            PlaySound(dice);
-            player1turn=true;
-            player2turn=false;
-            player3turn=false;
-            player4turn=false;
-        }
 
     DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
     DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
