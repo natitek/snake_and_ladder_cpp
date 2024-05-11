@@ -1,0 +1,8 @@
+*.txt
+*.sh
+*.exe
+*makefile
+math.cpp
+menu.cpp
+test2.cpp
+test.cpp
