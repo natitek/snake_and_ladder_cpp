@@ -22,7 +22,6 @@ struct player
     std::string name;
     int wins;
     int losses;
-    int points;
     int position;
 };
 
@@ -82,6 +81,13 @@ int numberofchar4 = 0;
 
 bool multi = false;
 
+
+bool name1= false;
+bool name2= false;
+bool name3= false;
+bool name4= false;
+
+
 std::vector<Vector2> coordinates;
 
 std::vector<int> snakehead = {32, 36, 48, 62, 88, 95, 97};
@@ -108,13 +114,13 @@ void generatecoordinates()
             if ((counter - 1) % 10 == 0 && (counter - 1) != 0)
             {
                 coordinates.push_back({coordinates[counter - 1].x, coordinates[counter - 1].y - boxsize});
-                std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
+                // std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
                 continue;
             }
             else if (counter % 10 == 0)
             {
                 coordinates.push_back({coordinates[counter - 1].x - boxsize, coordinates[counter - 1].y});
-                std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
+                // std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
                 continue;
             }
             coordinates.push_back({coordinates[counter - 1].x + boxsize, coordinates[counter - 1].y});
@@ -126,30 +132,32 @@ void generatecoordinates()
             if ((counter - 1) % 10 == 0 && (counter - 1) != 0)
             {
                 coordinates.push_back({coordinates[counter - 1].x, coordinates[counter - 1].y - boxsize});
-                std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
+                // std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
                 continue;
             }
             else if (counter % 10 == 0)
             {
                 coordinates.push_back({coordinates[counter - 1].x + boxsize, coordinates[counter - 1].y});
-                std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
+                // std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
                 continue;
             }
 
             coordinates.push_back({coordinates[counter - 1].x - boxsize, coordinates[counter - 1].y});
         }
         // Print out the output of the above code
-        std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
+        // std::cout << "at " << counter << " x: " << coordinates[counter].x << " y: " << coordinates[counter].y << std::endl;
     }
 }
 std::vector<player> players;
+
+
 void leaderboardSort()
 {
     for (unsigned int i = 0; i < players.size(); i++)
     {
         for (unsigned int j = 0; j < players.size() - 1; j++)
         {
-            if (players[j].points < players[j + 1].points)
+            if (players[j].wins < players[j + 1].wins)
                 std::swap(players[j], players[j + 1]);
         }
     }
@@ -163,7 +171,7 @@ void loadPlayerData()
     {
         players.clear(); // Clear the vector before loading data
         player playerr;
-        while (inputFile >> playerr.name >> playerr.wins >> playerr.losses >> playerr.points)
+        while (inputFile >> playerr.name >> playerr.wins >> playerr.losses)
         {
             players.push_back(playerr);
         }
@@ -175,47 +183,18 @@ void loadPlayerData()
     }
     leaderboardSort();
 }
+
+
 void savePlayerData()
 {
-    for (int i = 0; i < players.size(); i++)
-    {
-        if (player1_name == players[i].name && player1in)
-        {
-            players[i].name = player1.name;
-            players[i].wins = player1.wins;
-            players[i].losses = player1.losses;
-            players[i].points = player1.points;
-        }
-        if (player2_name == players[i].name && player2in)
-        {
-            players[i].name = player2.name;
-            players[i].wins = player2.wins;
-            players[i].losses = player2.losses;
-            players[i].points = player2.points;
-        }
-        if (player3_name == players[i].name && player3in)
-        {
-            players[i].name = player3.name;
-            players[i].wins = player3.wins;
-            players[i].losses = player3.losses;
-            players[i].points = player3.points;
-        }
-        if (player4_name == players[i].name && player4in)
-        {
-            players[i].name = player4.name;
-            players[i].wins = player4.wins;
-            players[i].losses = player4.losses;
-            players[i].points = player4.points;
-        }
-    }
-
+    
     std::ofstream outputFile("player_data.txt");
     if (outputFile.is_open())
     {
         for (player &playerr : players)
         {
-            playerr.points = (playerr.wins);
-            outputFile << playerr.name << " " << playerr.wins << " " << playerr.losses << " " << playerr.points << "\n";
+            
+            outputFile << playerr.name << " " << playerr.wins << " " << playerr.losses << " " << "\n";
         }
         outputFile.close();
     }
@@ -224,12 +203,56 @@ void savePlayerData()
         std::cout << "Unable to open file for writing." << std::endl;
     }
 }
+std::string chartostring(char* c){
+            std::string x;
+            for(int i=0;i<11;i++){
+                x[i]=c[i];
+            }
+            return x;
+        }
+    
+    
+void playerexist(){
+     std::cout << "works";
+    for (int i = 0; i < players.size(); i++)
+    {
+        if (chartostring(player1_name) == players[i].name && player1in)
+        {
+            name1 = true;
+            player1.name = players[i].name;
+            player1.wins=  players[i].wins;
+             player1.losses = players[i].losses;
+             std::cout << "works";
+        }
+        if (chartostring(player2_name) == players[i].name && player2in)
+        {
+            name2 = true;
+              player2.name =players[i].name;
+            player2.wins=  players[i].wins;
+             player2.losses = players[i].losses;
+        }
+        if (chartostring(player3_name) == players[i].name && player3in)
+        {
+            name3 = true;
+                player3.name =players[i].name;
+            player3.wins=  players[i].wins;
+             player3.losses = players[i].losses;
+        }
+        if (chartostring(player4_name) == players[i].name && player4in)
+        {
+            name4 = true;
+               player4.name = players[i].name;
+            player4.wins=  players[i].wins;
+             player4.losses = players[i].losses;
+        }
+    }
+}
 
-void initializePlayer(player &newPlayer)
+void initializePlayer(player &newPlayer, char* name)
 {
+    newPlayer.name = name;
     newPlayer.wins = 0;
     newPlayer.losses = 0;
-    newPlayer.points = 0;
     players.push_back(newPlayer);
 }
 
@@ -254,15 +277,53 @@ void checksnakeorladder(player &player)
  int num_of_player;
 int checkwin(player &player)
 {
-    
+    bool loss = false;
+  static int count = 0;
+
      if (player.position == 100)
         {
-            player.points+= 3;
+
             player.wins++;
+            loss = true;
+            savePlayerData();
+            player1in = player2in = player3in = player1in = false;
             return 1;
         }
-   return 0;
+    else return 0;
+        if(player.position != 100 && loss){
+            if(count < 3){
+            player.losses++;
+            count++;
+            }
+        }
+    
+  
 }
+
+std::string nameofwinner = "this";
+
+//display winner name on menu state 8
+void displayWinner(player &playername){
+    if(playername.position ==  100){
+
+       nameofwinner = playername.name;
+    }
+}
+
+   //remove player name
+   
+         void removenames(char* name_of_player){
+            for(int i = 0; i < sizeof(name_of_player); i++){
+                 name_of_player[i]  = '\0';}
+                    }
+
+    //change background function
+
+    void change_background(){
+
+    }
+
+Color trans_green = {0, 228, 48, 50};
 
 int main(void)
 {
@@ -280,21 +341,24 @@ int main(void)
     Texture2D menu_title = LoadTexture("src/img/snl_title.png"); // title of game
     Texture2D play_button = LoadTexture("src/img/play.png");     // play button
     Texture2D setting_button = LoadTexture("src/img/gear.png");  // settings button
-
     Texture2D single_player = LoadTexture("src/img/single_player.png");
-
     Texture2D multi_player = LoadTexture("src/img/multi_player.png");
-
     Texture2D option_bg = LoadTexture("src/img/option_bg.png");
-
     Texture2D submit_button = LoadTexture("src/img/submit.png");
-
     Texture2D main_menu_bg = LoadTexture("src/img/main_menu_bg.png");
-
     Texture2D plus_button = LoadTexture("src/img/plus_button.png");
     Texture2D minus_button = LoadTexture("src/img/minus_button.png");
+    Texture2D sprite_image = LoadTexture("src/img/sprite_image.png");
+    Texture2D next_color_right = LoadTexture("src/img/next_color_right.png");
+    Texture2D next_color_left = LoadTexture("src/img/next_color_left.png");
+    Texture2D pause_button = LoadTexture("src/img/pause_button.png");
+    Texture2D profile_button = LoadTexture("src/img/profile_button.png");
 
-    Texture2D sprite_image = LoadTexture("src/img/sprite_img.png");
+      Texture2D game_white_bg = LoadTexture("src/img/game_white_bg.png");
+    
+
+
+    Image window_icon = LoadImage("src/img/dice_menu.png");
 
     //     // Sounds
 
@@ -303,17 +367,21 @@ int main(void)
 
     SetTargetFPS(30); // Set our game to run at 60 frames-per-second
 
+    // void SetWindowIcon(Image window_icon);
+
+    SetWindowIcon(window_icon);
+
     // PlaySound(backgroundsound);
 
     //      //generate coordinates before game starts
     generatecoordinates();
 
-    Color trans = {0, 0, 0, 0};
+    Rectangle player1_single_name_box = {514, 241, 300, 50};
 
-    Rectangle player1_name_box = {514, 241, 300, 50};
-    Rectangle player2_name_box = {400, 200, 225, 50};
-    Rectangle player3_name_box = {400, 300, 225, 50};
-    Rectangle player4_name_box = {400, 400, 225, 50};
+    Rectangle player1_name_box = {400, 200, 300, 50};
+    Rectangle player2_name_box = {400, 300, 300, 50};
+    Rectangle player3_name_box = {400, 400, 300, 50};
+    Rectangle player4_name_box = {400, 500, 300, 50};
 
     int num_of_ai = 1;
     int num_of_humans = 1;
@@ -328,6 +396,8 @@ int main(void)
     //     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+
+        loadPlayerData();
 
         // Get the coordinates of the mouse by pressing SPACE
         Vector2 mouseposition = GetMousePosition();
@@ -378,10 +448,112 @@ int main(void)
         Rectangle orangedestination = (Rectangle){coordinates[player4.position].x + 10, coordinates[player4.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
 
-        if (player1.position >= 100)
-        {
-            DrawText("Player 1 Won", screenWidth / 2, screenHeight / 2, 80, GREEN);
-        }
+Rectangle profile_button_src = (Rectangle){0, 0, profile_button.width, profile_button.height};
+
+        Rectangle profile_button_des= (Rectangle){screenWidth-150,screenHeight-120,profile_button_src.width*0.2,profile_button_src.height*0.2};
+
+
+
+
+
+
+
+static int sprite_index = 0;
+static int sprite_index1 = 0;
+static int sprite_index2 = 0;
+static int sprite_index3 = 0;
+static int sprite_index4 = 0;
+
+ 
+
+
+//change sprite color
+ if (mouseOnTextBox)
+ {
+     if ((IsKeyPressed(KEY_RIGHT)) && menu_state4)
+     {
+
+         sprite_index += (sprite_image.width / 10);
+     }
+     else if ((IsKeyPressed(KEY_LEFT)) && menu_state4)
+     {
+         sprite_index -= (sprite_image.width / 10);
+     }
+ }
+
+ if (mouseOnTextBox1)
+ {
+     if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+     {
+
+         sprite_index1 += (sprite_image.width / 10);
+     }
+     else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+     {
+         sprite_index1 -= (sprite_image.width / 10);
+     }
+ }
+
+ if (mouseOnTextBox2)
+ {
+     if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+     {
+
+         sprite_index2 += (sprite_image.width / 10);
+     }
+     else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+     {
+         sprite_index2 -= (sprite_image.width / 10);
+     }
+ }
+
+ if (mouseOnTextBox3)
+ {
+     if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+     {
+
+         sprite_index3 += (sprite_image.width / 10);
+     }
+     else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+     {
+         sprite_index3 -= (sprite_image.width / 10);
+     }
+ }
+ if (mouseOnTextBox4)
+ {
+     if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+     {
+
+         sprite_index4 += (sprite_image.width / 10);
+     }
+     else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+     {
+         sprite_index4 -= (sprite_image.width / 10);
+     }
+ }
+
+
+Rectangle spritesource = {sprite_index,0,sprite_image.width/10,sprite_image.height};
+
+ Rectangle spritesource1 = {sprite_index1,0,sprite_image.width/10,sprite_image.height};
+ Rectangle spritesource2 = {sprite_index2,0,sprite_image.width/10,sprite_image.height};
+ Rectangle spritesource3 = {sprite_index3,0,sprite_image.width/10,sprite_image.height};
+ Rectangle spritesource4  = {sprite_index4,0,sprite_image.width/10,sprite_image.height};
+
+
+        Rectangle spritedestinationsingle = {player1_single_name_box.x-100,player1_single_name_box.y,spritesource.width/5,spritesource.height/5};
+
+        Rectangle spritedestination = {player1_single_name_box.x-200,player1_name_box.y,spritesource.width/5,spritesource.height/5};
+
+        Rectangle spritedestination2 = {player1_single_name_box.x-200,player2_name_box.y,spritesource.width/5,spritesource.height/5};
+
+          Rectangle spritedestination3 = {player1_single_name_box.x-200,player3_name_box.y,spritesource.width/5,spritesource.height/5};
+
+           Rectangle spritedestination4 = {player1_single_name_box.x-200,player4_name_box.y,spritesource.width/5,spritesource.height/5};
+
+
+        
+
 
         //--- MENU UI ---//
 
@@ -394,6 +566,7 @@ int main(void)
         Rectangle multi_player_src = {0, 0, multi_player.width, multi_player.height};
         Rectangle multi_player_des = {single_player_des.x + single_player_des.width + 50, single_player_des.y, multi_player_src.width, multi_player_src.height};
 
+
         Rectangle play_button_src = {0, 0, play_button.width, play_button.height};
         Rectangle play_button_des = {screenWidth / 2 - 40, screenHeight / 2 + 60, 100, 100};
 
@@ -401,9 +574,18 @@ int main(void)
         Rectangle setting_button_des = {50, 600, 100, 100};
 
         Rectangle submit_button_src = {0, 0, submit_button.width, submit_button.height};
-        Rectangle submit_button_des = {564, 500, submit_button.width * 0.3, submit_button.height * 0.3};
 
-        Rectangle sprite_rectangle = {0, 0, 0, 0};
+          Rectangle submit_button_des = {615,497, submit_button.width * 0.3, submit_button.height * 0.3};
+
+
+if(menu_state5){
+          submit_button_des = (Rectangle){835, 340, submit_button.width * 0.3, submit_button.height * 0.3}; //change position of submit button in single and multiplayer options
+}
+
+       
+
+        Rectangle pause_rec = {0,0, pause_button.width,pause_button.height};
+
 
         // menu state 1  main menu
         if (menu_state1)
@@ -412,6 +594,8 @@ int main(void)
             DrawTexture(main_menu_bg, 0, 0, RAYWHITE);                                                   // background
             DrawTexturePro(play_button, play_button_src, play_button_des, {0, 0}, 0, RAYWHITE);          // playbutton
             DrawTexturePro(setting_button, setting_button_src, setting_button_des, {0, 0}, 0, RAYWHITE); // setting_button
+
+            DrawTexturePro(profile_button, profile_button_src, profile_button_des, {0, 0}, 0, RAYWHITE); // profile_button
 
             // checks if play_button is clicked
             if (CheckCollisionPointRec(mouseposition, play_button_des) && menu_state2 != true)
@@ -528,26 +712,22 @@ int main(void)
         // menu state 4  single player options
         if (menu_state4)
         {
-            menu_state1 = false;
-            menu_state2 = false;
-            menu_state3 = false;
-            menu_state5 = false;
-            menu_state6 = false;
-            menu_state7 = false;
+            menu_state1 = menu_state2 = menu_state3 = menu_state5 = menu_state6 = menu_state7 = false;
             
             DrawTextureEx(bg_squares, {0, 0}, 0, 1, RAYWHITE);
             DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
             DrawText("Single player options", 400, 100, 50, LIGHTGRAY);
 
-            DrawText("player name", player1_name_box.x, player1_name_box.y - 30, 20, GRAY);
+            DrawText("player name", player1_single_name_box.x, player1_single_name_box.y - 30, 20, GRAY);
 
-            DrawRectangleRec(player1_name_box, WHITE);
+            DrawRectangleRec(player1_single_name_box, WHITE);
+
             if (mouseOnTextBox && menu_state4)
-                DrawRectangleLines(player1_name_box.x, player1_name_box.y, player1_name_box.width, player1_name_box.height, RED);
+                DrawRectangleLines(player1_single_name_box.x, player1_single_name_box.y, player1_single_name_box.width, player1_single_name_box.height, RED);
             else
-                DrawRectangleLines(player1_name_box.x, player1_name_box.y, player1_name_box.width, player1_name_box.height, DARKGRAY);
+                DrawRectangleLines(player1_single_name_box.x, player1_single_name_box.y, player1_single_name_box.width, player1_single_name_box.height, DARKGRAY);
 
-            DrawText(player1_name, player1_name_box.x + 5, player1_name_box.y + 8, 40, BLUE);
+            DrawText(player1_name, player1_single_name_box.x + 5, player1_single_name_box.y + 8, 40, BLUE);
 
             DrawText("ai players", 533, 360, 40, BLACK);
             DrawText(TextFormat("%i", num_of_ai), 620, 420, 40, BLACK);
@@ -557,10 +737,14 @@ int main(void)
 
             DrawTexturePro(submit_button, submit_button_src, submit_button_des, {0, 0}, 0, RAYWHITE);
 
-            if (CheckCollisionPointRec(mouseposition, player1_name_box) && menu_state4 == true)
+            DrawTexturePro(sprite_image,spritesource,spritedestinationsingle,{0,0},0,RAYWHITE); // Sprite pieces color selection
+
+DrawTextureEx(next_color_right,{player1_single_name_box.x-50,player1_single_name_box.y},0,1.0f,RAYWHITE);// next color button right
+DrawTextureEx(next_color_left,{player1_single_name_box.x-150,player1_single_name_box.y},0,1.0f,RAYWHITE);// next color button left
+
+            if (CheckCollisionPointRec(mouseposition, player1_single_name_box) && menu_state4 == true)
                 mouseOnTextBox = true;
-            else
-                mouseOnTextBox = false;
+            else mouseOnTextBox = false;
             if (mouseOnTextBox && menu_state4)
             {
                 SetMouseCursor(MOUSE_CURSOR_IBEAM);
@@ -586,12 +770,12 @@ int main(void)
             else
                 SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
-            if (IsKeyPressed(KEY_P) && menu_state4 == true)
+            if (IsKeyPressed(KEY_EQUAL) && menu_state4 == true)
             {
                 num_of_ai++;
             }
 
-            if (IsKeyPressed(KEY_O) && menu_state4 == true)
+            if (IsKeyPressed(KEY_MINUS) && menu_state4 == true)
             {
                 num_of_ai--;
             }
@@ -604,7 +788,12 @@ int main(void)
             if (CheckCollisionPointRec(mouseposition, submit_button_des) && menu_state4 == true)
             {
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-                {
+                {   
+
+                 
+                   
+
+
                     menu_state6 = true;
                 }
             }
@@ -620,27 +809,27 @@ int main(void)
         // menu state 5 multiplayer option
         if (menu_state5)
         {
-
-            menu_state1 = false;
-            menu_state2 = false;
-            menu_state3 = false;
-            menu_state4 = false;
-            menu_state6 = false;
-            menu_state7 = false;
+            menu_state1 = menu_state2 = menu_state3 = menu_state4 = menu_state6 = menu_state7 = menu_state8= false;
             DrawTextureEx(bg_squares, {0, 0}, 0, 1, RAYWHITE);
             DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
             DrawText("multiplayer options", 450, 100, 50, LIGHTGRAY);
 
-            Rectangle player1_name_box = {400, 100, 225, 50};
+        loadPlayerData();
 
             if (num_of_humans == 2)
             {
                 DrawTextureEx(bg_squares, {0, 0}, 0, 1, RAYWHITE);
                 DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+                   DrawText("multiplayer options", 450, 100, 50, LIGHTGRAY);
                 DrawText("player 1 name", player1_name_box.x, player1_name_box.y - 30, 20, GRAY);
                 DrawText("player 2 name", player2_name_box.x, player2_name_box.y - 30, 20, GRAY);
                 DrawRectangleRec(player1_name_box, WHITE);
                 DrawRectangleRec(player2_name_box, WHITE);
+   
+                DrawTexturePro(sprite_image,spritesource1,spritedestination,{0,0},0,RAYWHITE); 
+                DrawTexturePro(sprite_image,spritesource2,spritedestination2,{0,0},0,RAYWHITE); 
+          
+                // Sprite pieces color selection
 
                 if (mouseOnTextBox1 && menu_state5)
                     DrawRectangleLines(player1_name_box.x, player1_name_box.y, player1_name_box.width, player1_name_box.height, RED);
@@ -658,12 +847,19 @@ int main(void)
             {
                 DrawTextureEx(bg_squares, {0, 0}, 0, 1, RAYWHITE);
                 DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+                   DrawText("multiplayer options", 450, 100, 50, LIGHTGRAY);
+                   
                 DrawText("player 1 name", player1_name_box.x, player1_name_box.y - 30, 20, GRAY);
                 DrawText("player 2 name", player2_name_box.x, player2_name_box.y - 30, 20, GRAY);
                 DrawText("player 3 name", player3_name_box.x, player3_name_box.y - 30, 20, GRAY);
                 DrawRectangleRec(player1_name_box, WHITE);
                 DrawRectangleRec(player2_name_box, WHITE);
                 DrawRectangleRec(player3_name_box, WHITE);
+
+                   DrawTexturePro(sprite_image,spritesource1,spritedestination,{0,0},0,RAYWHITE); 
+                     DrawTexturePro(sprite_image,spritesource2,spritedestination2,{0,0},0,RAYWHITE); 
+                    DrawTexturePro(sprite_image,spritesource3,spritedestination3,{0,0},0,RAYWHITE); 
+
 
                 if (mouseOnTextBox1 && menu_state5)
                     DrawRectangleLines(player1_name_box.x, player1_name_box.y, player1_name_box.width, player1_name_box.height, RED);
@@ -686,6 +882,13 @@ int main(void)
             {
                 DrawTextureEx(bg_squares, {0, 0}, 0, 1, RAYWHITE);
                 DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+                   DrawText("multiplayer options", 450, 100, 50, LIGHTGRAY);
+
+            DrawTexturePro(sprite_image,spritesource1,spritedestination,{0,0},0,RAYWHITE); 
+            DrawTexturePro(sprite_image,spritesource2,spritedestination2,{0,0},0,RAYWHITE); 
+            DrawTexturePro(sprite_image,spritesource3,spritedestination3,{0,0},0,RAYWHITE); 
+            DrawTexturePro(sprite_image,spritesource4,spritedestination4,{0,0},0,RAYWHITE); 
+
                 DrawText("player 1 name", player1_name_box.x, player1_name_box.y - 30, 20, GRAY);
                 DrawText("player 3 name", player3_name_box.x, player3_name_box.y - 30, 20, GRAY);
                 DrawText("player 2 name", player2_name_box.x, player2_name_box.y - 30, 20, GRAY);
@@ -719,11 +922,11 @@ int main(void)
                 DrawText(player4_name, player4_name_box.x + 5, player4_name_box.y + 8, 40, BLUE);
             }
 
-            DrawText("players", 562, 360, 40, BLACK);
-            DrawText(TextFormat("%i", num_of_humans), 620, 420, 40, BLACK);
+            DrawText("players", 822, 209, 40, BLACK);
+            DrawText(TextFormat("%i", num_of_humans), 874, 260, 40, BLACK);
 
-            DrawTextureEx(plus_button, {700, 400}, 0, 1, RAYWHITE);
-            DrawTextureEx(minus_button, {500, 400}, 0, 1, RAYWHITE);
+            DrawTextureEx(plus_button, {744, 274}, 0, 1, RAYWHITE);
+            DrawTextureEx(minus_button, {944, 274}, 0, 1, RAYWHITE);
 
             if (CheckCollisionPointRec(mouseposition, player1_name_box) && menu_state5)
                 mouseOnTextBox1 = true;
@@ -744,6 +947,8 @@ int main(void)
                 mouseOnTextBox4 = true;
             else
                 mouseOnTextBox4 = false;
+
+
 
             if (menu_state5)
             {
@@ -811,27 +1016,48 @@ int main(void)
             else
                 SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
-            if (IsKeyPressed(KEY_P) && menu_state5 == true)
+            if (IsKeyPressed(KEY_EQUAL) && menu_state5 == true)
             {
                 num_of_humans++;
             }
 
             DrawTexturePro(submit_button, submit_button_src, submit_button_des, {0, 0}, 0, RAYWHITE);
 
-            if (IsKeyPressed(KEY_O) && menu_state5 == true)
+            if (IsKeyPressed(KEY_MINUS) && menu_state5 == true)
             {
                 num_of_humans--;
             }
 
             if (num_of_humans > 4)
                 num_of_humans--;
-            else if (num_of_humans < 1)
+            else if (num_of_humans < 2)
                 num_of_humans++;
 
             if (CheckCollisionPointRec(mouseposition, submit_button_des))
             {
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
                 {
+                    player1.name = player1_name;
+                     player2.name = player2_name;
+                      player3.name = player3_name;
+                       player4.name = player4_name;
+                  
+        playerexist();
+           
+        if(!name1){
+            initializePlayer(player1, player1_name);
+        }
+         if(!name2){
+            initializePlayer(player2, player2_name);
+        }
+         if(!name3){
+            initializePlayer(player3, player3_name);
+        }
+         if(!name4){
+            initializePlayer(player4, player4_name);
+        }
+        savePlayerData();
+
                     menu_state6 = true;
                      num_of_player = num_of_humans;
                 }
@@ -846,14 +1072,10 @@ int main(void)
         // menu state 6 game screen
         if (menu_state6)
         {
-            menu_state1 = false;
-            menu_state2 = false;
-            menu_state3 = false;
-            menu_state4 = false;
-            menu_state5 = false;
-            menu_state7 = false;
+            menu_state1 = menu_state2 = menu_state3 = menu_state4 = menu_state5 = menu_state7 = menu_state8 = false;
 
             DrawTextureEx(bg_squares, {0, 0}, 0, 1, RAYWHITE);
+             DrawTextureEx(game_white_bg,{10,100},0,1.0f,RAYWHITE); //white background on player name 
             DrawTexturePro(snakeimage, source, Dest, (Vector2){Dest.width / 2, (Dest.height / 2)}, 0, WHITE);
 
             if (num_of_humans == 1)
@@ -878,40 +1100,49 @@ int main(void)
                 player3in = true;
                 player4in = true;
             }
+
+           
+
+
             DrawText("press R to roll", 100, 110, 20, GREEN);
 
             DrawText(TextFormat("%i", generated), 100, 120, 80, LIGHTGRAY);
 
-            DrawText("player1 Positon : ", 100, 180, 20, LIGHTGRAY);
+            DrawText(player1_name, 100, 200, 30, BLACK);
 
-            DrawText(TextFormat("%i", player1.position), 100, 220, 80, LIGHTGRAY);
+            // DrawText(TextFormat("%i", player1.position), 100, 220, 80, LIGHTGRAY);
 
-            DrawText("players2 Positon : ", 100, 280, 20, LIGHTGRAY);
+            DrawText( player2_name, 100, 230, 30, BLACK);
 
-            DrawText(TextFormat("%i", player2.position), 100, 320, 80, LIGHTGRAY);
+            // DrawText(TextFormat("%i", player2.position), 100, 320, 80, LIGHTGRAY);
 
-            DrawText("players3 Positon : ", 100, 380, 20, LIGHTGRAY);
+            DrawText(player3_name, 100, 260, 30, BLACK);
 
-            DrawText(TextFormat("%i", player3.position), 100, 420, 80, LIGHTGRAY);
+            // DrawText(TextFormat("%i", player3.position), 100, 420, 80, LIGHTGRAY);
 
-            DrawText("players4 Positon : ", 100, 480, 20, LIGHTGRAY);
+            DrawText(player4_name, 100, 290, 30, BLACK);
             
-            DrawText(TextFormat("%i", player4.position), 100, 520, 80, LIGHTGRAY);
+            // DrawText(TextFormat("%i", player4.position), 100, 520, 80, LIGHTGRAY);
+
+
+
 
             if (IsKeyReleased(KEY_SPACE) && player1in && player1turn && !multi)
             {
-                WaitTime(3);
+              PlaySound(dice);
+
+            //   WaitTime(2);
                 generated = roll();
+                
+                 
                 if (player1.position + generated > 100)
                     continue;
                 player1.position += generated;
+                
                 checksnakeorladder(player1);
                 checkwin(player1);
-                   if(checkwin(player1) == 3){
-                    DrawText("Game OVER",screenHeight/2,screenWidth/2,80,BLUE);
-                }
-              
-                PlaySound(dice);
+           
+                
                 player1turn = false;
                 player2turn = true;
                 player3turn = false;
@@ -920,17 +1151,15 @@ int main(void)
 
             else if (!player2in && player2turn)
             {
-            WaitTime(3);
+           
                 generated = roll();
 
                 if (player2.position + generated > 100)
                     continue;
                 player2.position += generated;
+                //  WaitTime(3);
                 checksnakeorladder(player2);
                 checkwin(player2);
-                 if(checkwin(player2) == 1){
-                    DrawText("Game OVER",screenHeight/2,screenWidth/2,80,BLUE);
-                }
                 PlaySound(dice);
                 player1turn = false;
                 player2turn = false;
@@ -947,17 +1176,16 @@ int main(void)
 
             else if (!player3in && player3turn)
             {
-            WaitTime(3);
+            
                 generated = roll();
 
                 if (player3.position + generated > 100)
                     continue;
                 player3.position += generated;
+            //    WaitTime(3);
                 checksnakeorladder(player3);
                 checkwin(player3);
-                   if(checkwin(player3) == 1){
-                    DrawText("Game OVER",screenHeight/2,screenWidth/2,80,BLUE);
-                }
+              
                 PlaySound(dice);
                 player1turn = false;
                 player2turn = false;
@@ -974,19 +1202,16 @@ int main(void)
 
             else if (!player4in && player4turn)
             {
-                WaitTime(3);
+               
                 generated = roll();
 
                 if (player3.position + generated > 100)
                     continue;
                 player4.position += generated;
+                //  WaitTime(3);
                 checksnakeorladder(player4);
                  checkwin(player4);
-                   if(checkwin(player4) == 1){
-                    DrawText("Game OVER",screenHeight/2,screenWidth/2,80,BLUE);
-                }
-               
-                PlaySound(dice);
+                 PlaySound(dice);
                 player1turn = true;
                 player2turn = false;
                 player3turn = false;
@@ -1077,7 +1302,7 @@ int main(void)
                checksnakeorladder(player4);
                  checkwin(player4);
                 if(checkwin(player4) == 1){
-                menu_state8;
+                menu_state8 = true;
                 }
                 PlaySound(dice);
                 player1turn = true;
@@ -1086,11 +1311,50 @@ int main(void)
                 player4turn = false;
             }
 
-            DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
-            DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
-            DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
-            DrawTexturePro(blue_sprite, orangesource, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, ORANGE);
+            DrawTexturePro(pause_button,pause_rec,pause_rec,{0,0},0,RAYWHITE);
 
+if(!multi){
+            switch(num_of_ai+1){
+                case 2:  
+                    DrawTexturePro(sprite_image, spritesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
+                    break;
+                case 3:
+                    DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
+                    DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
+                    break;
+                ;
+                case 4:
+                    DrawTexturePro(blue_sprite, bluesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(blue_sprite, greensource, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, GREEN);
+                    DrawTexturePro(blue_sprite, redsource, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RED);
+                    DrawTexturePro(blue_sprite, orangesource, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, ORANGE);
+                    break;
+            }
+}
+
+if(multi){
+            switch(num_of_humans){
+                case 2: 
+                    DrawTexturePro(sprite_image, spritesource1, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                   break;
+                case 3: 
+                    DrawTexturePro(sprite_image, spritesource1, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image,spritesource3, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RAYWHITE);
+                    break;
+                case 4: 
+                    DrawTexturePro(sprite_image, spritesource1, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource4, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, RAYWHITE);
+                    break;
+            }
+
+}
+         
             if (IsKeyPressed(KEY_BACKSPACE) && menu_state6 == true)
             {
                 menu_state3 = true;
@@ -1101,31 +1365,38 @@ int main(void)
         // menu state 7 pause screen
         if (menu_state7)
         {
-            menu_state1 = false;
-            menu_state2 = false;
-            menu_state3 = false;
-            menu_state4 = false;
-            menu_state5 = false;
-            menu_state6 = false;
+            menu_state1 = menu_state2 = menu_state3 = menu_state4 = menu_state5 = menu_state6 = false;
         }
+
+        // menu state 8 Profiles /highscore
            if (menu_state8)
         {
-            menu_state1 = false;
-            menu_state2 = false;
-            menu_state3 = false;
-            menu_state4 = false;
-            menu_state5 = false;
-            menu_state6 = false;
-            menu_state7 = false;
-              DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+            menu_state2 = menu_state1 = menu_state3 = menu_state4 = menu_state5 = menu_state6 = menu_state7 = false;
+            DrawTextureEx(bg_squares, {0, 0}, 0, 1.0f, RAYWHITE);
+            DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+            DrawText("Game Over",500,133,70,RED);
+
+            displayWinner(player1);
+            displayWinner(player2);
+            displayWinner(player3);
+            displayWinner(player4);
+
+               char winnerstringtochar[15];
+
+               for(int i = 0; i < nameofwinner.size(); i++){
+                winnerstringtochar[i] = nameofwinner[i];
+                winnerstringtochar[i+1] = '\0';
+               }
+            DrawText(TextFormat(winnerstringtochar) ,400,screenHeight/2,50,GREEN);
+            DrawText("is the winner",400,(screenHeight/2)+50,40,BLACK);
         }
 
         // std::cout << GetTime() << std::endl;
-
+        savePlayerData();
         EndDrawing();
         
     }
-    
+     
     UnloadSound(backgroundsound); // Unload sound
     UnloadSound(dice);
     CloseAudioDevice(); // Close audio device
