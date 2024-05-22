@@ -1,40 +1,53 @@
 # Snake and Ladder
 This final project is aimed to implement the Snake and Lader game.
 
+# Build and Run
 
-## vscode debug support
-Use the two files (`launch.json`, and `tesks.json`) in `.vscode` folder in order to debug your code on vscode.  
+``` mkdir SnakeAndLadders ```
 
-- Make sure the two files under `.vscode` are at the root of the repository.
-- Press F5 on your keyboard to start the debug
-- Debug should stop at your break points.
+``` clone github.com/natitek/final_project ```
+``` cd final_project ```
+``` g++ main.cpp -o game.exe -I src/include -L src/lib -lraylib ```
+``` ./game.exe```
 
-  ## Features
+## Features
   - Single Player mode
   - Multiplayer Mode
   - Settings
   - Profiles
  
-    ## Screen Shots
-      ### Start Menu
+  ## Screen Shots
+### Start Menu
 
-    <img title="Start Menu" alt="Start Menu" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-06-45.png">
-   ### Settings
-    <img title="Settings" alt="Settings" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-07-28.png">
-   ### Choose Mode 
-    <img title="Choose mode" alt="choose mode" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-08-13.png">
-<p>Profiles</p>
+<img title="Start Menu" alt="Start Menu" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-06-45.png">
+    
+### Settings
+<img title="Settings" alt="Settings" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-07-28.png">
+
+
+### Profiles
+
+<img title="Choose mode" alt="choose mode" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-22%2011-55-55.png">
+
+### Choose Mode 
+
+<img title="Choose mode" alt="choose mode" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-08-13.png">
+
+
+### Multiplayer options
  
- <p>Multiplayer options</p>
- <p>Singleplayer options</p>
+### Singleplayer options
  <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-08-31.png">
 
  
-  <p>Game</p>
+### Game
   <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-09-21.png">
   
-   <p>Pause</p>
-    <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-09-55.png">
-    <p>Winning Screen</p> <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-11-38.png">
+### Pause
+
+<img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-09-55.png">
+
+### Win Screen
+<img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-11-38.png">
     
 
