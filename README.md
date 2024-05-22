@@ -34,15 +34,18 @@ This final project is aimed to implement the Snake and Ladder game.
 
 ### Choose Mode 
 
+
+
 <img title="Choose mode" alt="choose mode" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-08-13.png">
 
 
-### Multiplayer options
  
 ### Singleplayer options
  <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-08-31.png">
 
- 
+### Multiplayer options
+ <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-08-52.png">
+
 ### Game
   <img title="Profiles" alt="profiles" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-09-21.png">
   
