@@ -3,11 +3,15 @@ This final project is aimed to implement the Snake and Ladder game.
 
 # Build and Run
 
-` mkdir SnakeAndLadders 
- clone github.com/natitek/final_project 
-cd final_project 
-g++ main.cpp -o game.exe -I src/include -L src/lib -lraylib 
- ./game.exe`
+` mkdir SnakeAndLadders`
+<br>
+ `clone github.com/natitek/final_project `
+ <br>
+`cd final_project `
+ <br>
+`g++ main.cpp -o game.exe -I src/include -L src/lib -lraylib `
+ <br>
+ `./game.exe`
 
 ## Features
   - Single Player mode
