@@ -3,7 +3,7 @@ This final project is aimed to implement the Snake and Ladder game.
 
 # Build and Run
 
-` mkdir SnakeAndLadders`
+`mkdir SnakeAndLadders`
 <br>
  `clone github.com/natitek/final_project `
  <br>
