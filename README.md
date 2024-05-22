@@ -9,11 +9,13 @@ Use the two files (`launch.json`, and `tesks.json`) in `.vscode` folder in order
 - Press F5 on your keyboard to start the debug
 - Debug should stop at your break points.
 
-  ##Features
+  ## Features
   - Single Player mode
   - Multiplayer Mode
   - Settings
   - Profiles
  
-    #Screen Shots
+    ## Screen Shots
+
+    ![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg "a title")
 
