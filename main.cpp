@@ -41,6 +41,7 @@ float initialpositionx = 260;
 float initialpositiony = 666;
 float temp;
 
+<<<<<<< HEAD
 bool menu_state1; // start menu
 bool menu_state2; // settings
 bool menu_state3; // select b/n single vs multi
@@ -50,6 +51,17 @@ bool menu_state6; // game
 bool menu_state7; //  pause
 bool menu_state8; // win screen
 bool menu_state9; // profiles
+=======
+bool menu_state1;
+bool menu_state2;
+bool menu_state3;
+bool menu_state4;
+bool menu_state5;
+bool menu_state6;
+bool menu_state7;
+bool menu_state8;
+bool menu_state9;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 
 bool player1in = false;
 bool player2in = false;
@@ -157,8 +169,11 @@ void generatecoordinates()
 
 std::vector<player> players;
 
+<<<<<<< HEAD
 std::vector<std::string> names;
 
+=======
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 void leaderboardSort()
 {
     for (int i = 0; i < players.size(); i++)
@@ -193,12 +208,22 @@ void loadPlayerData()
 
 void savePlayerData()
 {
+<<<<<<< HEAD
     for (int i = 0; i < players.size(); i++)
     {
         for (int j = 0; j < players.size(); j++)
         {
             if (players[i].name == players[j].name && (i != j))
             {
+=======
+    for (unsigned int i = 0; i < players.size(); i++)
+    {
+        for (unsigned int j = 0; j < players.size(); j++)
+        {
+            if (players[i].name == players[j].name && (i != j))
+            {
+                std::cout << "file" << std::endl;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 players[i].wins += players[j].wins;
                 players[i].losses += players[j].losses;
                 std::swap(players[j], players[players.size() - 1]);
@@ -225,6 +250,7 @@ void savePlayerData()
 
 void ai_name()
 {
+<<<<<<< HEAD
     std::string x;
     int name_index;
     int temp;
@@ -314,7 +340,25 @@ void ai_name()
         {
             player4_name[i] = x[i];
         }
+=======
+    if (num_of_ai == 1)
+    {
+        player2_name[0] = 'w';
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
     }
+    if (num_of_ai == 2)
+    {
+        player2_name[0] = 'w';
+        player3_name[0] = 'w';
+    }
+    if (num_of_ai == 3)
+    {
+        player2_name[0] = 'w';
+        player3_name[0] = 'w';
+        player4_name[0] = 'w';
+    }
+
+    // add a (ai) suffix at the end of the name
 }
 
 void initializePlayer(player &newPlayer, char *name)
@@ -342,7 +386,10 @@ void checksnakeorladder(player &player)
         }
     }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 void removenames(char *name_of_player)
 {
     for (int i = 0; i < sizeof(name_of_player); i++)
@@ -363,18 +410,25 @@ void restartgame(bool gameoverstate)
         removenames(player4_name);
         gameover = false;
     }
+<<<<<<< HEAD
     else
     {
         player1turn = true;
         player1.position = player2.position = player3.position = player4.position = 0;
     }
+=======
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 }
 
 // int num_of_player;
 int checkwin(player &playr)
 {
     bool loss = false;
+<<<<<<< HEAD
     // static int count = 0;
+=======
+    static int count = 0;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 
     if (playr.position == 100)
     {
@@ -397,11 +451,118 @@ int checkwin(player &playr)
 
     savePlayerData();
     return 0;
+<<<<<<< HEAD
+=======
 }
 
 int checkloss()
 {
 
+    if (checkwin(player1) == 1)
+    {
+        for (int i = 0; i < players.size(); i++)
+        {
+            if (player2.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player3.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player4.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+        }
+    }
+    if (checkwin(player2) == 1)
+    {
+        for (int i = 0; i < players.size(); i++)
+        {
+            if (player1.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player3.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player4.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+        }
+    }
+    if (checkwin(player3) == 1)
+    {
+        for (int i = 0; i < players.size(); i++)
+        {
+            if (player2.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player1.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player4.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+        }
+    }
+    if (checkwin(player4) == 1)
+    {
+        for (int i = 0; i < players.size(); i++)
+        {
+            if (player2.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player3.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+            if (player1.name == players[i].name)
+            {
+                players[i].losses++;
+
+                savePlayerData();
+            }
+        }
+    }
+    savePlayerData();
+    return 0;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
+}
+
+int checkloss()
+{
+
+<<<<<<< HEAD
     if (checkwin(player1) == 1)
     {
         for (int i = 0; i < players.size(); i++)
@@ -510,21 +671,49 @@ void displayWinner(player &playername)
     if (playername.position == 100)
     {
 
+=======
+// display winner name on menu state 8
+void displayWinner(player &playername)
+{
+    if (playername.position == 100)
+    {
+
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
         nameofwinner = playername.name;
     }
 }
 
+<<<<<<< HEAD
 //
 
 void changesoundvol(float volume, Sound nameofsound)
 {
     SetSoundVolume(nameofsound, volume);
+=======
+// remove player name
+
+void animate_dice(int rolled, Texture2D nameoftexture)
+{
+    switch (rolled)
+    {
+    // case 1:DrawTexturePro(nameoftexture,,,{0,0},0,RAYWHITE);
+    case 2:;
+    case 3:;
+    case 4:;
+    case 5:;
+    case 6:;
+    }
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 }
 
 int main(void)
 {
 
+<<<<<<< HEAD
     InitWindow(screenWidth, screenHeight, "Snake And Ladders");
+=======
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
     InitAudioDevice();
 
     //     // Textures
@@ -551,7 +740,11 @@ int main(void)
     Texture2D initial_wood = LoadTexture("src/img/initial_wood.png");
     Texture2D restart_button = LoadTexture("src/img/restart_button.png");
     Texture2D game_white_bg = LoadTexture("src/img/game_white_bg.png");
+<<<<<<< HEAD
     // Texture2D delete_button = LoadTexture("src/img/delete_user.png"); didnt use
+=======
+    Texture2D delete_button = LoadTexture("src/img/delete_user.png");
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
     Texture2D exit_button = LoadTexture("src/img/exit_game.png");
 
     Texture2D scroll_up_button = LoadTexture("src/img/scroll_up.png");
@@ -592,7 +785,11 @@ int main(void)
     Rectangle player3_name_box = {400, 400, 300, 50};
     Rectangle player4_name_box = {400, 500, 300, 50};
 
+<<<<<<< HEAD
     int volumeofbg = 2;
+=======
+    int volumeofbg = 4;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
     int volumeofsfx = 4;
 
     // menu states
@@ -624,18 +821,22 @@ int main(void)
         Rectangle Dest = (Rectangle){screenWidth / 2, screenHeight / 2, source.width * 0.264, source.height * 0.264};
 
         Rectangle bluesource = (Rectangle){0, 0, blue_sprite.width, blue_sprite.height};
+
         Rectangle bluedestination = (Rectangle){coordinates[player1.position].x, coordinates[player1.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
         Rectangle greensource = (Rectangle){0, 0, blue_sprite.width, blue_sprite.height};
+
         Rectangle greendestination = (Rectangle){coordinates[player2.position].x + 15, coordinates[player2.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
         Rectangle redsource = (Rectangle){0, 0, blue_sprite.width, blue_sprite.height};
+
         Rectangle reddestination = (Rectangle){coordinates[player3.position].x + 5, coordinates[player3.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
         Rectangle orangesource = (Rectangle){0, 0, blue_sprite.width, blue_sprite.height};
         Rectangle orangedestination = (Rectangle){coordinates[player4.position].x + 10, coordinates[player4.position].y, blue_sprite.width * 0.2, blue_sprite.height * 0.2};
 
         Rectangle profile_button_src = (Rectangle){0, 0, profile_button.width, profile_button.height};
+<<<<<<< HEAD
         Rectangle profile_button_des = (Rectangle){screenWidth - 150, screenHeight - 120, profile_button_src.width * 0.2, profile_button_src.height * 0.2};
 
         static int sprite_index = 0;
@@ -697,6 +898,95 @@ int main(void)
             }
         }
         if (mouseOnTextBox4)
+=======
+
+        Rectangle profile_button_des = (Rectangle){screenWidth - 150, screenHeight - 120, profile_button_src.width * 0.2, profile_button_src.height * 0.2};
+
+        static int sprite_index = 0;
+        static int sprite_index1 = 0;
+        static int sprite_index2 = (sprite_image.width / 10) * 2;
+        static int sprite_index3 = (sprite_image.width / 10) * 3;
+        static int sprite_index4 = (sprite_image.width / 10) * 4;
+
+        // change sprite color
+        if (mouseOnTextBox)
+        {
+            if ((IsKeyPressed(KEY_RIGHT)) && menu_state4)
+            {
+
+                sprite_index += (sprite_image.width / 10);
+            }
+            else if ((IsKeyPressed(KEY_LEFT)) && menu_state4)
+            {
+                sprite_index -= (sprite_image.width / 10);
+            }
+        }
+
+        if (mouseOnTextBox1)
+        {
+            if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+            {
+
+                sprite_index1 += (sprite_image.width / 10);
+            }
+            else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+            {
+                sprite_index1 -= (sprite_image.width / 10);
+            }
+        }
+
+        if (mouseOnTextBox2)
+        {
+            if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+            {
+
+                sprite_index2 += (sprite_image.width / 10);
+            }
+            else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+            {
+                sprite_index2 -= (sprite_image.width / 10);
+            }
+        }
+
+        if (mouseOnTextBox3)
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
+        {
+            if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
+            {
+
+<<<<<<< HEAD
+                sprite_index4 += (sprite_image.width / 10);
+            }
+            else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+            {
+                sprite_index4 -= (sprite_image.width / 10);
+            }
+        }
+
+        Rectangle spritesource = {sprite_index, 0, sprite_image.width / 10, sprite_image.height};
+
+        Rectangle spritesource1 = {sprite_index1, 0, sprite_image.width / 10, sprite_image.height};
+        Rectangle spritesource2 = {sprite_index2, 0, sprite_image.width / 10, sprite_image.height};
+        Rectangle spritesource3 = {sprite_index3, 0, sprite_image.width / 10, sprite_image.height};
+        Rectangle spritesource4 = {sprite_index4, 0, sprite_image.width / 10, sprite_image.height};
+
+        Rectangle spritedestinationsingle = {player1_single_name_box.x - 100, player1_single_name_box.y, spritesource.width / 5, spritesource.height / 5};
+
+        Rectangle spritedestination = {player1_single_name_box.x - 200, player1_name_box.y, spritesource.width / 5, spritesource.height / 5};
+
+        Rectangle spritedestination2 = {player1_single_name_box.x - 200, player2_name_box.y, spritesource.width / 5, spritesource.height / 5};
+
+        Rectangle spritedestination3 = {player1_single_name_box.x - 200, player3_name_box.y, spritesource.width / 5, spritesource.height / 5};
+
+=======
+                sprite_index3 += (sprite_image.width / 10);
+            }
+            else if ((IsKeyPressed(KEY_LEFT)) && menu_state5)
+            {
+                sprite_index3 -= (sprite_image.width / 10);
+            }
+        }
+        if (mouseOnTextBox4)
         {
             if ((IsKeyPressed(KEY_RIGHT)) && (menu_state5))
             {
@@ -724,6 +1014,7 @@ int main(void)
 
         Rectangle spritedestination3 = {player1_single_name_box.x - 200, player3_name_box.y, spritesource.width / 5, spritesource.height / 5};
 
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
         Rectangle spritedestination4 = {player1_single_name_box.x - 200, player4_name_box.y, spritesource.width / 5, spritesource.height / 5};
 
         // side bar rectangles
@@ -983,7 +1274,11 @@ int main(void)
                     ai_name();
                     menu_state6 = true;
                 }
+<<<<<<< HEAD
                 else if (player1_name[0] == '\0')
+=======
+                else
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 {
                     DrawText("enter name to continue", 460, 580, 40, RED);
                 }
@@ -1229,6 +1524,15 @@ int main(void)
                 // when submit is clicked do these
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && ismultitextboxempty == true)
                 {
+<<<<<<< HEAD
+=======
+                    // player1.name = player1_name;
+                    // player2.name = player2_name;
+                    // player3.name = player3_name;
+                    // player4.name = player4_name;
+
+                    // playerexist();
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 
                     initializePlayer(player1, player1_name);
 
@@ -1239,8 +1543,18 @@ int main(void)
                     initializePlayer(player4, player4_name);
                     savePlayerData();
                     menu_state6 = true;
+<<<<<<< HEAD
                 }
                 else if (ismultitextboxempty == false)
+=======
+                    // dont accept submit if there is no text on textboxes
+                    // if (((num_of_humans == 2) && ((player1_name[0] != '\0') && (player2_name[0] != '\0'))) || ((num_of_humans == 3) && ((player1_name[0] != '\0') && (player2_name[0] != '\0') && (player3_name[0] != '\0'))) || ((num_of_humans == 4) && ((player1_name[0] != '\0') && (player2_name[0] != '\0') && (player3_name[0] != '\0') && (player4_name[0] != '\0'))))
+                    // {
+                    //
+                    // }
+                }
+                else
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 {
                     DrawText("enter name to continue", 460, 580, 40, RED);
                 }
@@ -1292,14 +1606,56 @@ int main(void)
             DrawText(TextFormat("%i", generated), 100, 120, 80, LIGHTGRAY);
 
             // Color turncolor = {0, 228, 48, 255}; //start with black
+<<<<<<< HEAD
 
             // ai player turn
+=======
 
+            if (player1turn)
+            {
+                DrawText(player1_name, 100, 200, 30, GREEN);
+            }
+            else
+            {
+                DrawText(player1_name, 100, 200, 30, BLACK);
+            }
+            if (player2turn)
+            {
+                DrawText(player2_name, 100, 250, 30, GREEN);
+            }
+            else
+            {
+                DrawText(player2_name, 100, 250, 30, BLACK);
+            }
+            if (player3turn)
+            {
+                DrawText(player3_name, 100, 300, 30, GREEN);
+            }
+            else
+            {
+                DrawText(player3_name, 100, 300, 30, BLACK);
+            }
+
+            if (player4turn)
+            {
+                DrawText(player4_name, 100, 350, 30, GREEN);
+            }
+            else
+            {
+                DrawText(player4_name, 100, 350, 30, BLACK);
+            }
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
+
+            // ai player turn
             if (IsKeyReleased(KEY_SPACE) && player1in && player1turn && !multi)
             {
                 PlaySound(dice);
 
+<<<<<<< HEAD
                 //   WaitTime(1);
+=======
+                WaitTime(3);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 generated = roll();
 
                 if (player1.position + generated > 100)
@@ -1307,34 +1663,55 @@ int main(void)
                 player1.position += generated;
 
                 checksnakeorladder(player1);
+<<<<<<< HEAD
                 checkwin(player1);
                 if (checkwin(player1) == 3)
                 {
                     DrawText("Game OVER", screenHeight / 2, screenWidth / 2, 80, BLUE);
                 }
 
+=======
+                if (checkwin(player1) == 1)
+                {
+                    menu_state8 = true;
+                }
+                WaitTime(3);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 player1turn = false;
                 player2turn = true;
                 player3turn = false;
                 player4turn = false;
             }
 
-            else if (!player2in && player2turn)
+            else if (!multi && player2turn)
             {
+<<<<<<< HEAD
 
+=======
+                PlaySound(dice);
+                WaitTime(3);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 generated = roll();
 
                 if (player2.position + generated > 100)
                     continue;
                 player2.position += generated;
-                //  WaitTime(3);
+                WaitTime(1);
                 checksnakeorladder(player2);
+<<<<<<< HEAD
                 checkwin(player2);
                 if (checkwin(player2) == 1)
                 {
                     DrawText("Game OVER", screenHeight / 2, screenWidth / 2, 80, BLUE);
                 }
                 PlaySound(dice);
+=======
+                if (checkwin(player2) == 1)
+                {
+                    menu_state8 = true;
+                };
+
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 player1turn = false;
                 player2turn = false;
                 player4turn = false;
@@ -1348,14 +1725,20 @@ int main(void)
                 }
             }
 
-            else if (!player3in && player3turn)
+            else if (!multi && player3turn)
             {
+<<<<<<< HEAD
 
+=======
+                PlaySound(dice);
+                WaitTime(3);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 generated = roll();
 
                 if (player3.position + generated > 100)
                     continue;
                 player3.position += generated;
+<<<<<<< HEAD
                 //    WaitTime(3);
                 checksnakeorladder(player3);
                 checkwin(player3);
@@ -1364,6 +1747,15 @@ int main(void)
                     DrawText("Game OVER", screenHeight / 2, screenWidth / 2, 80, BLUE);
                 }
                 PlaySound(dice);
+=======
+
+                checksnakeorladder(player3);
+                if (checkwin(player3) == 1)
+                {
+                    menu_state8 = true;
+                }
+
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 player1turn = false;
                 player2turn = false;
                 player3turn = false;
@@ -1377,16 +1769,22 @@ int main(void)
                 }
             }
 
-            else if (!player4in && player4turn)
+            else if (!multi && player4turn)
             {
+<<<<<<< HEAD
 
+=======
+                PlaySound(dice);
+                WaitTime(3);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 generated = roll();
 
                 if (player3.position + generated > 100)
                     continue;
                 player4.position += generated;
-                //  WaitTime(3);
+
                 checksnakeorladder(player4);
+<<<<<<< HEAD
                 checkwin(player4);
                 if (checkwin(player4) == 1)
                 {
@@ -1394,6 +1792,13 @@ int main(void)
                 }
 
                 PlaySound(dice);
+=======
+                if (checkwin(player4) == 1)
+                {
+                    menu_state8 = true;
+                }
+
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 player1turn = true;
                 player2turn = false;
                 player3turn = false;
@@ -1517,6 +1922,7 @@ int main(void)
                 player4turn = false;
             }
 
+<<<<<<< HEAD
             // color of text
             //
 
@@ -1554,20 +1960,29 @@ int main(void)
                 DrawText(player4_name, 100, 350, 30, BLACK);
             }
 
+=======
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             DrawTextureEx(initial_wood, {80, 653}, 0, 0.8, RAYWHITE);
 
             if (!multi)
             {
+<<<<<<< HEAD
 
                 switch (num_of_ai + 1)
                 {
                 case 2:
 
+=======
+                switch (num_of_ai + 1)
+                {
+                case 2:
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                     DrawTexturePro(sprite_image, spritesource, sidebar_sprite, {0, 0}, 0, RAYWHITE);
                     DrawTexturePro(sprite_image, spritesource2, sidebar_sprite2, {0, 0}, 0, RAYWHITE);
 
                     DrawTexturePro(sprite_image, spritesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
                     DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+<<<<<<< HEAD
 
                     break;
 
@@ -1619,6 +2034,57 @@ int main(void)
                     DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
                     DrawTexturePro(sprite_image, spritesource3, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RAYWHITE);
                     break;
+=======
+                    break;
+                case 3:
+                    DrawTexturePro(sprite_image, spritesource, sidebar_sprite, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, sidebar_sprite2, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, sidebar_sprite3, {0, 0}, 0, RAYWHITE);
+
+                    DrawTexturePro(sprite_image, spritesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RAYWHITE);
+                    break;
+                    ;
+                case 4:
+                    DrawTexturePro(sprite_image, spritesource, sidebar_sprite, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, sidebar_sprite2, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, sidebar_sprite3, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource4, sidebar_sprite4, {0, 0}, 0, RAYWHITE);
+
+                    DrawTexturePro(sprite_image, spritesource, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource4, orangedestination, (Vector2){orangedestination.height / 2, orangedestination.width / 2}, 0, RAYWHITE);
+                    break;
+                }
+            }
+
+            if (multi)
+            {
+                switch (num_of_humans)
+                {
+                case 2:
+                    // sidebar sprites
+
+                    DrawTexturePro(sprite_image, spritesource1, sidebar_sprite, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, sidebar_sprite2, {0, 0}, 0, RAYWHITE);
+
+                    //
+                    DrawTexturePro(sprite_image, spritesource1, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                    break;
+                case 3:
+                    // sidebar
+                    DrawTexturePro(sprite_image, spritesource1, sidebar_sprite, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, sidebar_sprite2, {0, 0}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, sidebar_sprite3, {0, 0}, 0, RAYWHITE);
+
+                    DrawTexturePro(sprite_image, spritesource1, bluedestination, (Vector2){bluedestination.height / 2, bluedestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource2, greendestination, (Vector2){greendestination.height / 2, greendestination.width / 2}, 0, RAYWHITE);
+                    DrawTexturePro(sprite_image, spritesource3, reddestination, (Vector2){reddestination.height / 2, reddestination.width / 2}, 0, RAYWHITE);
+                    break;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
                 case 4:
                     DrawTexturePro(sprite_image, spritesource1, sidebar_sprite, {0, 0}, 0, RAYWHITE);
                     DrawTexturePro(sprite_image, spritesource2, sidebar_sprite2, {0, 0}, 0, RAYWHITE);
@@ -1658,12 +2124,19 @@ int main(void)
             DrawTextureEx(grass_bg, {0, 0}, 0, 1.0f, RAYWHITE);
             DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
             DrawText("pause", 539, 137, 70, BLACK);
+<<<<<<< HEAD
             DrawTextureEx(restart_button, {555, 235}, 0, 0.45f, RAYWHITE);
             DrawTextureEx(play_button, {235, 235}, 0, 0.2f, RAYWHITE);
             DrawTextureEx(exit_button, {865, 232}, 0, 0.3f, RAYWHITE);
             DrawText("Press R to restart", 555, 375, 20, BLACK);
             DrawText("Press P to resume", 235, 375, 20, BLACK);
             DrawText("Press E to exit", 865, 375, 20, BLACK);
+=======
+            DrawTextureEx(restart_button, {742, 235}, 0, 0.45f, RAYWHITE);
+            DrawTextureEx(play_button, {402, 235}, 0, 0.2f, RAYWHITE);
+            DrawText("Press R to restart", 742, 375, 20, BLACK);
+            DrawText("Press P to resume", 402, 375, 20, BLACK);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 
             // volume control
             DrawText("Music", 250, 425, 20, RED);
@@ -1686,6 +2159,7 @@ int main(void)
             }
 
             if ((IsKeyPressed(KEY_NINE)) && menu_state7 == true)
+<<<<<<< HEAD
             {
                 volumeofsfx--;
                 changesoundvol((float)volumeofsfx / 10.0f, backgroundsound);
@@ -1705,11 +2179,22 @@ int main(void)
                 volumeofbg--;
                 changesoundvol((float)volumeofbg / 10.0f, backgroundsound);
             }
+=======
+                volumeofsfx--;
+            else if ((IsKeyPressed(KEY_ZERO)) && menu_state7 == true)
+                volumeofsfx++;
+
+            if ((IsKeyPressed(KEY_EQUAL)) && menu_state7 == true)
+                volumeofbg++;
+            else if ((IsKeyPressed(KEY_MINUS)) && menu_state7 == true)
+                volumeofbg--;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 
             if ((IsKeyPressed(KEY_P)) && menu_state7 == true)
             {
                 menu_state6 = true;
             }
+<<<<<<< HEAD
             else if (IsKeyPressed(KEY_E))
             {
                 menu_state3 = true;
@@ -1721,6 +2206,14 @@ int main(void)
                 restartgame(false);
                 menu_state6 = true;
             }
+=======
+            else if (IsKeyPressed(KEY_R))
+            {
+                menu_state5 = true;
+                gameover = true;
+                restartgame(gameover);
+            }
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
         }
 
         // menu state 8 win screen
@@ -1730,13 +2223,17 @@ int main(void)
             DrawTextureEx(bg_squares, {0, 0}, 0, 1.0f, RAYWHITE);
             DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
             DrawText("Game Over", 480, 133, 70, RED);
+<<<<<<< HEAD
             listofplayers = {player1, player2, player3, player4};
+=======
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
 
             for (player n : listofplayers)
             {
                 displayWinner(n);
             }
 
+<<<<<<< HEAD
             DrawText(nameofwinner.c_str(), 500, screenHeight / 2, 70, GREEN);
             DrawText("is the winner", 500, (screenHeight / 2) + 100, 40, BLACK);
 
@@ -1744,6 +2241,22 @@ int main(void)
             {
                 menu_state3 = true;
                 restartgame(true);
+=======
+            char winnerstringtochar[15];
+
+            for (int i = 0; i < nameofwinner.size(); i++)
+            {
+                winnerstringtochar[i] = nameofwinner[i];
+                winnerstringtochar[i + 1] = '\0';
+            }
+            DrawText(TextFormat(winnerstringtochar), 500, screenHeight / 2, 70, GREEN);
+            DrawText("is the winner", 500, (screenHeight / 2) + 100, 40, BLACK);
+
+            if (IsKeyPressed(KEY_ESCAPE) && menu_state8 == true)
+            {
+                menu_state3 = true;
+                restartgame(gameover);
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             }
         }
         // menu state 9 profile screen
@@ -1751,8 +2264,17 @@ int main(void)
         {
             menu_state1 = menu_state2 = menu_state3 = menu_state4 = menu_state5 = menu_state6 = menu_state7 = menu_state8 = false;
 
+<<<<<<< HEAD
             DrawTextureEx(bg_squares, {0, 0}, 0, 1.0f, RAYWHITE);
             DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+=======
+            // DrawTextureEx(bg_squares, {0, 0}, 0, 1.0f, RAYWHITE);
+            DrawTextureEx(bg_squares, {0, 0}, 0, 1.0f, RAYWHITE);
+            DrawTextureEx(option_bg, {100, 100}, 0, 1.0f, RAYWHITE);
+
+            // DrawTexturePro(delete_user, delete_user_src, delete_user_des, {0, 0}, 0, RAYWHITE);
+
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             static int mx = 150, my = 250;
             static int wrapped = 0;
 
@@ -1777,12 +2299,19 @@ int main(void)
             if (my > 500)
             {
                 my = 500;
+<<<<<<< HEAD
                 // deletethis = 6;
+=======
+                deletethis = 6;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             }
             if (my < 250)
             {
                 my = 250;
+<<<<<<< HEAD
                 deletethis = 0;
+=======
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             }
 
             loadPlayerData();
@@ -1793,7 +2322,11 @@ int main(void)
             DrawText("wins", 720, 220, 20, BLACK);
             DrawText("losses", 1000, 220, 20, BLACK);
 
+<<<<<<< HEAD
             if (players.size() >= 5 && my == 500 && IsKeyPressed(KEY_S))
+=======
+            if (players.size() >= 6 && my == 500 && IsKeyPressed(KEY_S))
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             {
 
                 wrapped += 1;
@@ -1804,7 +2337,11 @@ int main(void)
             {
 
                 wrapped -= 1;
+<<<<<<< HEAD
                 // deletethis -= 1;
+=======
+                deletethis -= 1;
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             }
 
             // limiter of bounds
@@ -1818,7 +2355,11 @@ int main(void)
             }
             // limiter of delete this
 
+<<<<<<< HEAD
             if (players.size() >= 0)
+=======
+            if (players.size() > 0)
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
             {
 
                 DrawText(players[0 + wrapped].name.c_str(), 150, 250, 40, BLACK);            // first player name
@@ -1877,6 +2418,11 @@ int main(void)
             }
         }
 
+<<<<<<< HEAD
+=======
+        // std::cout << GetTime() << std::endl;
+
+>>>>>>> 4d1af2198571db7378b8ecba1d3ef28da81f9b80
         savePlayerData();
         EndDrawing();
     }
