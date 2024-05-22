@@ -17,5 +17,6 @@ Use the two files (`launch.json`, and `tesks.json`) in `.vscode` folder in order
  
     ## Screen Shots
 
-    ![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg "a title")
+
+    <img title="Start Menu" alt="Start Menu" src="https://github.com/natitek/final_project/blob/main/src/screenshots/Screenshot%20from%202024-05-21%2015-06-45.png">
 
