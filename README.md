@@ -7,5 +7,13 @@ Use the two files (`launch.json`, and `tesks.json`) in `.vscode` folder in order
 
 - Make sure the two files under `.vscode` are at the root of the repository.
 - Press F5 on your keyboard to start the debug
-- Debug should stop at your break points. 
+- Debug should stop at your break points.
+
+  ##Features
+  - Single Player mode
+  - Multiplayer Mode
+  - Settings
+  - Profiles
+ 
+    #Screen Shots
 
